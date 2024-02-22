@@ -1,5 +1,5 @@
 package org.example.model;
 
 public enum Specialization {
-    INTERN, OCULIST;
+    INTERN, OCULIST, CARDIOLOGIST, DERMATOLOGIST, ALLERGIST
 }
