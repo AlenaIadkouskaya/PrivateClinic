@@ -5,7 +5,7 @@ import org.example.model.Visit;
 import java.time.LocalDate;
 import java.util.List;
 
-class SearchServiceImpl implements SearchService{
+public class SearchServiceImpl implements SearchService{
     @Override
     public List<Visit> searchVisit(LocalDate date) {
 
