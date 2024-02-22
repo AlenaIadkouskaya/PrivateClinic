@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.exception.ExceptionLackOfVisit;
 import org.example.model.Visit;
 
 import java.time.LocalDate;
@@ -17,6 +18,9 @@ public class VisitServiceImpl implements VisitService {
 
     @Override
     public void addVisit(Visit visit) {
+        if (visit == null) {
+            throw new NullPointerException("Visit can't be empty!");
+        }
         LocalDate dateOfVisit = visit.getDate();
         List<Visit> currentListOfVisits = listVisits.get(dateOfVisit);
         if (currentListOfVisits == null) {
@@ -28,7 +32,23 @@ public class VisitServiceImpl implements VisitService {
 
     @Override
     public void deleteVisit(Integer id) {
-
+        boolean operationExecuted = false;
+        for (Map.Entry<LocalDate, List<Visit>> entry : listVisits.entrySet()) {
+            List<Visit> nextList = entry.getValue();
+            for (int i = 0; i < nextList.size(); i++) {
+                if (nextList.get(i).getId().equals(id)) {
+                    nextList.remove(i);
+                    operationExecuted = true;
+                    break;
+                }
+            }
+            if (operationExecuted) {
+                break;
+            }
+        }
+        if (!operationExecuted) {
+            throw new ExceptionLackOfVisit("This visit is not exist!");
+        }
     }
 
     @Override
