@@ -9,13 +9,18 @@ public class Visit {
     private LocalTime time;
     private Doctor doctor;
     private Patient patient;
+    public static Integer countVisits = 0;
 
     public Visit(Integer id, LocalDate date, LocalTime time, Doctor doctor) {
         this.id = id;
         this.date = date;
         this.time = time;
         this.doctor = doctor;
+        countVisits++;
 //        this.patient = null;
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
 }
