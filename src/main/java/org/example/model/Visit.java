@@ -9,7 +9,7 @@ public class Visit {
     private LocalTime time;
     private Doctor doctor;
     private Patient patient;
-    public static Integer countVisits = 0;
+    public static Integer countVisits = 1;
 
     public Visit(Integer id, LocalDate date, LocalTime time, Doctor doctor) {
         this.id = id;
