@@ -8,7 +8,7 @@ import java.util.List;
 
 class SearchServiceImpl implements SearchService{
     //@Override
-    public List<Visit> searchVisit(Date date) {
+    public List<Visit> searchVisit(LocalDate date) {
 
         return null;
     }

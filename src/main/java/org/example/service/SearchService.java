@@ -7,5 +7,5 @@ import java.util.Date;
 import java.util.List;
 
 interface SearchService {
-    List<Visit> searchVisit(Date date);
+    List<Visit> searchVisit(LocalDate date);
 }
