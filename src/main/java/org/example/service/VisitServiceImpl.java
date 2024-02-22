@@ -5,22 +5,22 @@ import org.example.model.Visit;
 import java.util.List;
 
 public class VisitServiceImpl implements VisitService{
-    @Override
+    //@Override
     public void addVisit(Visit visit) {
 
     }
 
-    @Override
+    //@Override
     public void deleteVisit(Integer id) {
 
     }
 
-    @Override
+    //@Override
     public void canselVisit(Integer id) {
 
     }
 
-    @Override
+    //@Override
     public List<Visit> showVisit() {
         return null;
     }
