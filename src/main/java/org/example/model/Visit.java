@@ -15,7 +15,5 @@ public class Visit {
         this.date = date;
         this.time = time;
         this.doctor = doctor;
-//        this.patient = null;
     }
-
 }

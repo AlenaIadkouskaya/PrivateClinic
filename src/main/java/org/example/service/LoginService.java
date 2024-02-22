@@ -1,7 +1,8 @@
 package org.example.service;
 
-interface LoginService {
+import org.example.model.User;
 
-    boolean login (String user);
+public interface LoginService {
+    User login (String login);
 
 }

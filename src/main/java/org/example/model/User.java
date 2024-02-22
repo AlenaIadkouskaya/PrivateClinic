@@ -1,7 +1,5 @@
 package org.example.model;
 
-import java.awt.*;
-
 public abstract class User {
     private Integer id;
     private String name;
