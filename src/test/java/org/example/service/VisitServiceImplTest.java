@@ -1,11 +1,10 @@
 package org.example.service;
 
 import junit.framework.TestCase;
+import org.example.exception.ExceptionLackOfVisit;
 import org.example.model.Doctor;
 import org.example.model.Specialization;
 import org.example.model.Visit;
-//import org.junit.jupiter.api.Test;
-//import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -58,5 +57,53 @@ public class VisitServiceImplTest extends TestCase {
         //then
         assertThat(visitService.listVisits.get(LocalDate.of(2024, 4, 1)).size()).isEqualTo(1);
         assertThat(visitService.listVisits.get(LocalDate.of(2024, 3, 1)).size()).isEqualTo(2);
+    }
+
+    @Test
+    public void test_add_with_empty_visit() {
+        //given
+        VisitServiceImpl visitService = new VisitServiceImpl();
+        //when
+        try {
+            visitService.addVisit(null);
+        }catch (NullPointerException e){
+            //then
+            assertThat(e.getMessage()).isNotEqualTo("");
+        }
+    }
+
+    @Test
+    public void test_delete_exist_visit() {
+        //given
+        Visit firstVisit = new Visit(Visit.countVisits, LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
+                new Doctor(1, "d1", "d2", Specialization.ALLERGIST));
+        VisitServiceImpl visitService = new VisitServiceImpl();
+        visitService.addVisit(firstVisit);
+        Visit newVisit = new Visit(Visit.countVisits, LocalDate.of(2024, 3, 1), LocalTime.of(10, 0),
+                new Doctor(1, "d1", "d2", Specialization.ALLERGIST));
+        visitService.addVisit(newVisit);
+        Visit nextVisit = new Visit(Visit.countVisits, LocalDate.of(2024, 4, 1), LocalTime.of(10, 0),
+                new Doctor(1, "d1", "d2", Specialization.ALLERGIST));
+        visitService.addVisit(nextVisit);
+        //when
+        visitService.deleteVisit(2);
+        //then
+        assertThat(visitService.listVisits.get(LocalDate.of(2024, 3, 1)).size()).isEqualTo(1);
+    }
+
+    @Test
+    public void test_delete_exist_visit_that_not_exist() {
+        //given
+        Visit firstVisit = new Visit(Visit.countVisits, LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
+                new Doctor(1, "d1", "d2", Specialization.ALLERGIST));
+        VisitServiceImpl visitService = new VisitServiceImpl();
+        visitService.addVisit(firstVisit);
+        try {
+            //when
+            visitService.deleteVisit(2);
+        }catch (ExceptionLackOfVisit e){
+            //then
+            assertThat(e.getMessage()).isNotEqualTo("");
+        }
     }
 }

@@ -23,4 +23,8 @@ public class Visit {
     public LocalDate getDate() {
         return date;
     }
+
+    public Integer getId() {
+        return id;
+    }
 }
