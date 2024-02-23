@@ -17,6 +17,7 @@ public class MenuService {
     public void doctorMenuOptions(String userOption) {
         switch (userOption) {
             case "1":
+
                 break;
             case "2":
                 break;

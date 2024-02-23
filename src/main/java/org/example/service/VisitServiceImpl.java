@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.Utils;
 import org.example.exception.ExceptionLackOfVisit;
 import org.example.model.Visit;
 
@@ -58,8 +59,12 @@ public class VisitServiceImpl implements VisitService {
 
     @Override
     public List<Visit> showVisit() {
-
-        return null;
+        List<Visit> listAllVisits = new ArrayList<>();
+        for (Map.Entry<LocalDate, List<Visit>> entry : listVisits.entrySet()) {
+            listAllVisits.addAll(entry.getValue());
+        }
+        Utils.showToConsole(listAllVisits);
+        return listAllVisits;
     }
 
 }
