@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.model.Patient;
+import org.example.model.User;
 import org.example.model.Visit;
 
 import java.time.LocalDate;
@@ -17,6 +18,6 @@ public interface VisitService {
 
     List<Visit> showVisit();
 
-    void makeAppointment(Integer id, Patient patient);
+    void makeAppointment(Integer id, User patient);
 
 }

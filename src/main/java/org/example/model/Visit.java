@@ -40,7 +40,7 @@ public class Visit {
         return patient;
     }
 
-    public void setPatient(Patient patient) {
+    public void setPatient(User patient) {
         this.patient = patient;
     }
 }
