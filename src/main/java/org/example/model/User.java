@@ -2,13 +2,15 @@ package org.example.model;
 
 public abstract class User {
     private Integer id;
-    protected String name;
-    protected String surname;
+    private String name;
+    private String surname;
+    private String login;
 
-    public User(Integer id, String name, String surname) {
+    public User(Integer id, String name, String surname, String login) {
         this.id = id;
         this.name = name;
         this.surname = surname;
+        this.login = login;
     }
 
     @Override

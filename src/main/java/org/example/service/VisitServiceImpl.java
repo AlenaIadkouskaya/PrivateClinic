@@ -2,6 +2,7 @@ package org.example.service;
 
 import org.example.Utils;
 import org.example.exception.ExceptionLackOfVisit;
+import org.example.model.Patient;
 import org.example.model.Visit;
 
 import java.time.LocalDate;
@@ -85,4 +86,25 @@ public class VisitServiceImpl implements VisitService {
         return listAllVisits;
     }
 
+    @Override
+    public void makeAppointment(Integer id, Patient patient) {
+        boolean operationExecuted = false;
+        for (Map.Entry<LocalDate, List<Visit>> entry : listVisits.entrySet()) {
+            List<Visit> nextList = entry.getValue();
+            for (int i = 0; i < nextList.size(); i++) {
+                Visit nextVisit = nextList.get(i);
+                if (nextVisit.getId().equals(id) && nextVisit.getPatient() == null) {
+                    nextVisit.setPatient(patient);
+                    operationExecuted = true;
+                    break;
+                }
+            }
+            if (operationExecuted) {
+                break;
+            }
+        }
+        if (!operationExecuted) {
+            throw new ExceptionLackOfVisit("This visit is not exist or there is other patient record for this time!");
+        }
+    }
 }
