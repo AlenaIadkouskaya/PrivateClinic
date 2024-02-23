@@ -1,14 +1,29 @@
 package org.example.service;
 public class MenuService {
+//    public static void printMainMenu() {
+//        System.out.println();
+//        System.out.println("--------------MAIN MENU------------");
+//        System.out.println("Choose your options:");
+//        System.out.println("Enter    1     for enter your Login");
+////        System.out.println("Enter    1     for enter as Doctor");
+////        System.out.println("Enter    2    for enter as Patient");
+//        System.out.println("Enter    2     for Exit");
+//        System.out.println("------------------------------------");
+//        System.out.print("Input options: ");
+//    }
+
     public static void printMainMenu() {
         System.out.println();
-        System.out.println("----------------MAIN MENU---------------");
-        System.out.println("Choose your options:");
-        System.out.println("Enter    1     for enter as Doctor");
-        System.out.println("Enter    2    for enter as Patient");
-        System.out.println("Enter    exit       for Quit");
-        System.out.println("----------------------------------------");
-        System.out.print("Input options: ");
+        System.out.println("PRIVATE LIBRARY");
+        System.out.println();
+        System.out.println("If you wont quit, enter Exit");
+        System.out.println();
+        System.out.print("Enter your login: ");
+
+////        System.out.println("Enter    1     for enter as Doctor");
+////        System.out.println("Enter    2    for enter as Patient");
+//        System.out.println("Enter    2     for Exit");
+//        System.out.println("------------------------------------");
     }
 
     public static void printDoctorMenu() {

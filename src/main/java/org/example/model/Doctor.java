@@ -8,4 +8,7 @@ public class Doctor extends User {
         this.specialization = specialization;
     }
 
+    public Specialization getSpecialization() {
+        return specialization;
+    }
 }

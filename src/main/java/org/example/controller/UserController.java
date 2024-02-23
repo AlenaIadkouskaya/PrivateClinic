@@ -13,14 +13,20 @@ public class UserController {
 
     private final LoginService loginService = new LoginServiceImpl();
 
-//    public UserController(MenuService menuService, Scanner scanner) {
-//        this.menuService = new MenuService();
-//        this.scanner = new Scanner(System.in);
-//    }
 
-    //    public void run() {
-//        MenuService.printMainMenu();
-//        String userOption = scanner.nextLine();
+
+        public void run() {
+        MenuService.printMainMenu();
+        String userOption = scanner.nextLine();
+        if (userOption.equalsIgnoreCase("exit")){
+
+        }
+            User login = loginService.login("");
+                    if (login instanceof Doctor){
+                        doctorMenuOptions();
+                    } else {
+                        patientMenuOptions();
+                    }
 //        if (userOption.equalsIgnoreCase("doctor")) {
 //            MenuService.printDoctorMenu();
 //            String userOptionDoctor = scanner.nextLine();
@@ -31,37 +37,34 @@ public class UserController {
 //            String userOptionPatient = scanner.nextLine();
 //            MenuService.patientMenuOptions(userOptionPatient);
 //        }
-//        scanner.close();
-//    }
-
-    public void run() {
-        boolean mainMenu = true;
-        while (mainMenu) {
-            MenuService.printMainMenu();
-            String userOption = scanner.nextLine();
-            switch (userOption) {
-                case "1":
-                    User login = loginService.login("");
-                    if (login instanceof Doctor){
-                        //menu doctor
-                    } else {
-                        //menu patient
-                    }
-
-
-                    doctorMenuOptions();
-                    break;
-                case "2":
-                    patientMenuOptions();
-                    break;
-                case "exit":
-                    mainMenu = false;
-                    break;
-                default:
-                    System.out.println("Invalid option. Please choose a valid option.");
-            }
-        }
+        scanner.close();
     }
+
+//    public void run() {
+//        boolean mainMenu = true;
+//        while (mainMenu) {
+//            MenuService.printMainMenu();
+//            String userOption = scanner.nextLine();
+//            switch (userOption) {
+//                case "1":
+//                    User login = loginService.login("");
+//                    if (login instanceof Doctor){
+//                        doctorMenuOptions();
+//                    } else {
+//                        patientMenuOptions();
+//                    }
+//                    break;
+////                case "2":
+////                    patientMenuOptions();
+////                    break;
+//                case "2":
+//                    mainMenu = false;
+//                    break;
+//                default:
+//                    System.out.println("Invalid option. Please choose a valid option.");
+//            }
+//        }
+//    }
 
     public static void doctorMenuOptions() {
         boolean doctorMenu = true;

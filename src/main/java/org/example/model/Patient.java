@@ -8,4 +8,7 @@ public class Patient extends User {
         this.numberTelephone = numberTelephone;
     }
 
+    public String getNumberTelephone() {
+        return numberTelephone;
+    }
 }
