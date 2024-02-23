@@ -2,6 +2,7 @@ package org.example.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.UUID;
 
 public class Visit {
     private Integer id;
@@ -12,12 +13,11 @@ public class Visit {
     public static Integer countVisits = 1;
 
     public Visit(LocalDate date, LocalTime time, User doctor) {
+
         this.id = countVisits++;
         this.date = date;
         this.time = time;
         this.doctor = doctor;
-//        countVisits++;
-//        this.patient = null;
     }
 
     public LocalDate getDate() {
