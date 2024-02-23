@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -67,7 +68,7 @@ public class VisitServiceImplTest extends TestCase {
         //when
         try {
             visitService.addVisit(null);
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             //then
             assertThat(e.getMessage()).isNotEqualTo("");
         }
@@ -102,7 +103,7 @@ public class VisitServiceImplTest extends TestCase {
         try {
             //when
             visitService.deleteVisit(2);
-        }catch (ExceptionLackOfVisit e){
+        } catch (ExceptionLackOfVisit e) {
             //then
             assertThat(e.getMessage()).isNotEqualTo("");
         }
@@ -122,6 +123,24 @@ public class VisitServiceImplTest extends TestCase {
                 new Doctor(1, "d1", "d2", Specialization.ALLERGIST));
         visitService.addVisit(nextVisit);
         //when
-        visitService.showVisit();
+        List<Visit> receivedListVisits = visitService.showVisit();
+        //then
+        assertThat(receivedListVisits.size()).isEqualTo(3);
+    }
+
+    @Test
+    public void test_cancel_visit_without_patient() {
+        //given
+        Visit firstVisit = new Visit(Visit.countVisits, LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
+                new Doctor(1, "d1", "d2", Specialization.ALLERGIST));
+        VisitServiceImpl visitService = new VisitServiceImpl();
+        visitService.addVisit(firstVisit);
+        //when
+        try {
+            visitService.canselVisit(1);
+        } catch (ExceptionLackOfVisit e) {
+            //then
+            assertThat(e.getMessage()).isEqualTo("This visit is not exist or there is not patient record for this time!");
+        }
     }
 }

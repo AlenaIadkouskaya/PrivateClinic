@@ -37,7 +37,8 @@ public class VisitServiceImpl implements VisitService {
         for (Map.Entry<LocalDate, List<Visit>> entry : listVisits.entrySet()) {
             List<Visit> nextList = entry.getValue();
             for (int i = 0; i < nextList.size(); i++) {
-                if (nextList.get(i).getId().equals(id)) {
+                Visit nextVisit = nextList.get(i);
+                if (nextVisit.getId().equals(id) && nextVisit.getPatient() == null) {
                     nextList.remove(i);
                     operationExecuted = true;
                     break;
@@ -48,13 +49,30 @@ public class VisitServiceImpl implements VisitService {
             }
         }
         if (!operationExecuted) {
-            throw new ExceptionLackOfVisit("This visit is not exist!");
+            throw new ExceptionLackOfVisit("This visit is not exist or the visit needs to be cancelled!");
         }
     }
 
     @Override
     public void canselVisit(Integer id) {
-
+        boolean operationExecuted = false;
+        for (Map.Entry<LocalDate, List<Visit>> entry : listVisits.entrySet()) {
+            List<Visit> nextList = entry.getValue();
+            for (int i = 0; i < nextList.size(); i++) {
+                Visit nextVisit = nextList.get(i);
+                if (nextVisit.getId().equals(id) && nextVisit.getPatient() != null) {
+                    nextList.set(i, null);
+                    operationExecuted = true;
+                    break;
+                }
+            }
+            if (operationExecuted) {
+                break;
+            }
+        }
+        if (!operationExecuted) {
+            throw new ExceptionLackOfVisit("This visit is not exist or there is not patient record for this time!");
+        }
     }
 
     @Override
