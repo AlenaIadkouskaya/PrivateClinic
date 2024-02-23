@@ -63,19 +63,34 @@ public class UserController {
                     visitService.showVisit();
                     break;
                 case "2":
-                    System.out.print("Input year:");
-                    System.out.print("Input month:");
-                    System.out.print("Input day:");
-                    System.out.print("Input year:");
-                    visitService.addVisit(new Visit(LocalDate.of(2024,3,15), LocalTime.of(12,0), doctor));
+                    System.out.print("Input year: ");
+                    Integer year = scanner.nextInt();
+                    System.out.print("Input month: ");
+                    Integer month = scanner.nextInt();
+                    System.out.print("Input day: ");
+                    Integer day = scanner.nextInt();
+                    System.out.print("Input hour: ");
+                    Integer hour = scanner.nextInt();
+                    System.out.print("Input minute: ");
+                    Integer minute = scanner.nextInt();
+                    scanner.nextLine();
+                    visitService.addVisit(new Visit(LocalDate.of(year, month, day), LocalTime.of(hour, minute), doctor));
+                    visitService.showVisit();
+
                     break;
                 case "3":
-                    System.out.println("Inpui id");
-//                    visitService.deleteVisit();
+                    visitService.showVisit();
+                    System.out.print("Inpui id: ");
+                    Integer id = scanner.nextInt();
+                    scanner.nextLine();
+                    visitService.deleteVisit(id);
                     break;
                 case "4":
-                    System.out.println("Input");
-//                    visitService.canselVisit();
+                    visitService.showVisit();
+                    System.out.print("Input id: ");
+                    Integer id2 = scanner.nextInt();
+                    scanner.nextLine();
+                    visitService.canselVisit(id2);
                     break;
                 case "5":
                     //for Search Visit
