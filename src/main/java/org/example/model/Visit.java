@@ -27,4 +27,16 @@ public class Visit {
     public Integer getId() {
         return id;
     }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
 }
