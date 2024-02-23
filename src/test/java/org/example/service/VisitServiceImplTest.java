@@ -1,6 +1,7 @@
 package org.example.service;
 
 import junit.framework.TestCase;
+import org.example.Utils;
 import org.example.exception.ExceptionLackOfVisit;
 import org.example.model.Doctor;
 import org.example.model.Patient;
@@ -19,7 +20,7 @@ public class VisitServiceImplTest extends TestCase {
     @Test
     public void test_add_visit_when_not_exists_visits_on_this_day() {
         //given
-        Visit newVisit = new Visit(Visit.countVisits++, LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
+        Visit newVisit = new Visit(LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
                 new Doctor(1, "d1", "d2", "l1", Specialization.ALLERGIST));
         VisitServiceImpl visitService = new VisitServiceImpl();
         //when
@@ -31,11 +32,11 @@ public class VisitServiceImplTest extends TestCase {
     @Test
     public void test_add_visit_when_exists_visits_in_this_day() {
         //given
-        Visit firstVisit = new Visit(Visit.countVisits, LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
+        Visit firstVisit = new Visit(LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
                 new Doctor(1, "n1", "s1", "l1", Specialization.ALLERGIST));
         VisitServiceImpl visitService = new VisitServiceImpl();
         visitService.addVisit(firstVisit);
-        Visit newVisit = new Visit(Visit.countVisits, LocalDate.of(2024, 3, 1), LocalTime.of(10, 0),
+        Visit newVisit = new Visit(LocalDate.of(2024, 3, 1), LocalTime.of(10, 0),
                 new Doctor(1, "n2", "s2", "l2", Specialization.ALLERGIST));
         //when
         visitService.addVisit(newVisit);
@@ -46,14 +47,14 @@ public class VisitServiceImplTest extends TestCase {
     @Test
     public void test_add_visit_in_other_day() {
         //given
-        Visit firstVisit = new Visit(Visit.countVisits, LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
+        Visit firstVisit = new Visit(LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
                 new Doctor(1, "n1", "s2", "l2", Specialization.ALLERGIST));
         VisitServiceImpl visitService = new VisitServiceImpl();
         visitService.addVisit(firstVisit);
-        Visit newVisit = new Visit(Visit.countVisits, LocalDate.of(2024, 3, 1), LocalTime.of(10, 0),
+        Visit newVisit = new Visit(LocalDate.of(2024, 3, 1), LocalTime.of(10, 0),
                 new Doctor(1, "n2", "s2", "l2", Specialization.ALLERGIST));
         visitService.addVisit(newVisit);
-        Visit nextVisit = new Visit(Visit.countVisits, LocalDate.of(2024, 4, 1), LocalTime.of(10, 0),
+        Visit nextVisit = new Visit(LocalDate.of(2024, 4, 1), LocalTime.of(10, 0),
                 new Doctor(1, "n3", "s3", "l3", Specialization.ALLERGIST));
         //when
         visitService.addVisit(nextVisit);
@@ -78,14 +79,14 @@ public class VisitServiceImplTest extends TestCase {
     @Test
     public void test_delete_exist_visit() {
         //given
-        Visit firstVisit = new Visit(Visit.countVisits, LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
+        Visit firstVisit = new Visit(LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
                 new Doctor(1, "n1", "s1", "l1", Specialization.ALLERGIST));
         VisitServiceImpl visitService = new VisitServiceImpl();
         visitService.addVisit(firstVisit);
-        Visit newVisit = new Visit(Visit.countVisits, LocalDate.of(2024, 3, 1), LocalTime.of(10, 0),
+        Visit newVisit = new Visit(LocalDate.of(2024, 3, 1), LocalTime.of(10, 0),
                 new Doctor(1, "n2", "s2", "l2", Specialization.ALLERGIST));
         visitService.addVisit(newVisit);
-        Visit nextVisit = new Visit(Visit.countVisits, LocalDate.of(2024, 4, 1), LocalTime.of(10, 0),
+        Visit nextVisit = new Visit(LocalDate.of(2024, 4, 1), LocalTime.of(10, 0),
                 new Doctor(1, "n3", "s3", "l3", Specialization.ALLERGIST));
         visitService.addVisit(nextVisit);
         //when
@@ -97,7 +98,7 @@ public class VisitServiceImplTest extends TestCase {
     @Test
     public void test_delete_exist_visit_that_not_exist() {
         //given
-        Visit firstVisit = new Visit(Visit.countVisits, LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
+        Visit firstVisit = new Visit(LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
                 new Doctor(1, "n1", "s1", "l1", Specialization.ALLERGIST));
         VisitServiceImpl visitService = new VisitServiceImpl();
         visitService.addVisit(firstVisit);
@@ -113,14 +114,14 @@ public class VisitServiceImplTest extends TestCase {
     @Test
     public void test_show_list_of_all_visits() {
         //given
-        Visit firstVisit = new Visit(Visit.countVisits, LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
+        Visit firstVisit = new Visit(LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
                 new Doctor(1, "n1", "s1", "l1", Specialization.ALLERGIST));
         VisitServiceImpl visitService = new VisitServiceImpl();
         visitService.addVisit(firstVisit);
-        Visit newVisit = new Visit(Visit.countVisits, LocalDate.of(2024, 3, 1), LocalTime.of(10, 0),
+        Visit newVisit = new Visit(LocalDate.of(2024, 3, 1), LocalTime.of(10, 0),
                 new Doctor(1, "n2", "s2", "l2", Specialization.ALLERGIST));
         visitService.addVisit(newVisit);
-        Visit nextVisit = new Visit(Visit.countVisits, LocalDate.of(2024, 4, 1), LocalTime.of(10, 0),
+        Visit nextVisit = new Visit(LocalDate.of(2024, 4, 1), LocalTime.of(10, 0),
                 new Doctor(1, "n3", "s3", "l3", Specialization.ALLERGIST));
         visitService.addVisit(nextVisit);
         //when
@@ -132,7 +133,7 @@ public class VisitServiceImplTest extends TestCase {
     @Test
     public void test_cancel_visit_without_patient() {
         //given
-        Visit firstVisit = new Visit(Visit.countVisits, LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
+        Visit firstVisit = new Visit(LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
                 new Doctor(1, "n1", "s1", "l1", Specialization.ALLERGIST));
         VisitServiceImpl visitService = new VisitServiceImpl();
         visitService.addVisit(firstVisit);
@@ -150,7 +151,7 @@ public class VisitServiceImplTest extends TestCase {
     @Test
     public void test_make_appointment_when_time_is_empty() {
         //given
-        Visit firstVisit = new Visit(Visit.countVisits, LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
+        Visit firstVisit = new Visit(LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
                 new Doctor(1, "n1", "s1", "l1", Specialization.ALLERGIST));
         VisitServiceImpl visitService = new VisitServiceImpl();
         visitService.addVisit(firstVisit);
@@ -165,7 +166,7 @@ public class VisitServiceImplTest extends TestCase {
     @Test
     public void test_make_appointment_when_time_is_not_empty() {
         //given
-        Visit firstVisit = new Visit(Visit.countVisits, LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
+        Visit firstVisit = new Visit(LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
                 new Doctor(1, "n1", "s1", "l1", Specialization.ALLERGIST));
         VisitServiceImpl visitService = new VisitServiceImpl();
         visitService.addVisit(firstVisit);
@@ -185,7 +186,7 @@ public class VisitServiceImplTest extends TestCase {
     @Test
     public void test_cancel_visit_with_patient() {
         //given
-        Visit firstVisit = new Visit(Visit.countVisits, LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
+        Visit firstVisit = new Visit(LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
                 new Doctor(1, "n1", "s1", "l1", Specialization.ALLERGIST));
         VisitServiceImpl visitService = new VisitServiceImpl();
         visitService.addVisit(firstVisit);
@@ -198,5 +199,25 @@ public class VisitServiceImplTest extends TestCase {
             //then
             assertThat(e.getMessage()).isNotEqualTo("");
         }
+    }
+    @Test
+    public void test_search_with_help_date() {
+        //given
+        SearchService searchService = new SearchServiceImpl();
+        Visit firstVisit = new Visit(LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
+                new Doctor(1, "n1", "s1", "l1", Specialization.ALLERGIST));
+        VisitServiceImpl visitService = new VisitServiceImpl();
+        visitService.addVisit(firstVisit);
+        Visit newVisit = new Visit(LocalDate.of(2024, 3, 1), LocalTime.of(10, 0),
+                new Doctor(1, "n2", "s2", "l2", Specialization.ALLERGIST));
+        visitService.addVisit(newVisit);
+        Visit nextVisit = new Visit(LocalDate.of(2024, 4, 1), LocalTime.of(10, 0),
+                new Doctor(1, "n3", "s3", "l3", Specialization.ALLERGIST));
+        visitService.addVisit(nextVisit);
+        //when
+        List<Visit> listSearchVisits = searchService.searchVisit(LocalDate.of(2024, 3, 1), visitService.listVisits);
+        Utils.showToConsole(listSearchVisits);
+        //then
+        assertThat(listSearchVisits.size()).isEqualTo(2);
     }
 }
