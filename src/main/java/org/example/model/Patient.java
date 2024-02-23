@@ -3,7 +3,7 @@ package org.example.model;
 public class Patient extends User {
     private String numberTelephone;
 
-    public Patient(Integer id, String name, String surname, String numberTelephone, String login) {
+    public Patient(Integer id, String name, String surname, String login, String numberTelephone) {
         super(id, name, surname, login);
         this.numberTelephone = numberTelephone;
     }

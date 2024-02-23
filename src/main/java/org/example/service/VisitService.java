@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.model.Patient;
 import org.example.model.Visit;
 
 import java.time.LocalDate;
@@ -15,5 +16,7 @@ interface VisitService {
     void canselVisit(Integer id);
 
     List<Visit> showVisit();
-    //Map<LocalDate, List<Visit>> showVisit();
+
+    void makeAppointment(Integer id, Patient patient);
+
 }
