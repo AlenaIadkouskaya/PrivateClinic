@@ -2,41 +2,27 @@ package org.example.controller;
 
 import org.example.model.Doctor;
 import org.example.model.User;
-import org.example.service.LoginService;
-import org.example.service.LoginServiceImpl;
-import org.example.service.MenuService;
+import org.example.model.Visit;
+import org.example.service.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 public class UserController {
     private static final Scanner scanner = new Scanner(System.in);
-
     private final LoginService loginService = new LoginServiceImpl();
 
-
-
-        public void run() {
+    public void run() {
         MenuService.printMainMenu();
-        String userOption = scanner.nextLine();
-        if (userOption.equalsIgnoreCase("exit")){
-
+        String inputLogin = scanner.nextLine();
+        loginService.fakeUsers();
+        User login = loginService.login(inputLogin);
+        if (login instanceof Doctor) {
+            doctorMenuOptions(login);
+        } else {
+            patientMenuOptions(login);
         }
-            User login = loginService.login("");
-                    if (login instanceof Doctor){
-                        doctorMenuOptions();
-                    } else {
-                        patientMenuOptions();
-                    }
-//        if (userOption.equalsIgnoreCase("doctor")) {
-//            MenuService.printDoctorMenu();
-//            String userOptionDoctor = scanner.nextLine();
-//            MenuService.doctorMenuOptions(userOptionDoctor);
-//        }
-//        if (userOption.equalsIgnoreCase("patient")) {
-//            MenuService.printPatientMenu();
-//            String userOptionPatient = scanner.nextLine();
-//            MenuService.patientMenuOptions(userOptionPatient);
-//        }
         scanner.close();
     }
 
@@ -66,25 +52,35 @@ public class UserController {
 //        }
 //    }
 
-    public static void doctorMenuOptions() {
+    public static void doctorMenuOptions(User doctor) {
+        VisitService visitService = new VisitServiceImpl();
         boolean doctorMenu = true;
         while (doctorMenu) {
             MenuService.printDoctorMenu();
             String userOption = scanner.nextLine().toLowerCase();
             switch (userOption) {
                 case "1":
-                    // addVisit
+                    visitService.showVisit();
                     break;
                 case "2":
-                    // deleteVisit
+                    System.out.print("Input year:");
+                    System.out.print("Input month:");
+                    System.out.print("Input day:");
+                    System.out.print("Input year:");
+                    visitService.addVisit(new Visit(LocalDate.of(2024,3,15), LocalTime.of(12,0), doctor));
                     break;
                 case "3":
-                    // canselVisit
+                    System.out.println("Inpui id");
+//                    visitService.deleteVisit();
                     break;
                 case "4":
-                    //for Search Visit
+                    System.out.println("Input");
+//                    visitService.canselVisit();
                     break;
                 case "5":
+                    //for Search Visit
+                    break;
+                case "6":
                     doctorMenu = false;
                     break;
                 default:
@@ -93,20 +89,21 @@ public class UserController {
         }
     }
 
-    public static void patientMenuOptions() {
+    public static void patientMenuOptions(User patient) {
+        VisitService visitService = new VisitServiceImpl();
         boolean patientMenu = true;
         while (patientMenu) {
             MenuService.printPatientMenu();
             String userOption = scanner.nextLine().toLowerCase();
             switch (userOption) {
                 case "1":
-                    // showVisit
+                    visitService.showVisit();
                     break;
                 case "2":
-                    //
+//                    visitService.makeAppointment();
                     break;
                 case "3":
-                    //
+                    //search
                     break;
                 case "4":
                     patientMenu = false;

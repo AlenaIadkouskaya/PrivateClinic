@@ -7,16 +7,16 @@ public class Visit {
     private Integer id;
     private LocalDate date;
     private LocalTime time;
-    private Doctor doctor;
-    private Patient patient;
+    private User doctor;
+    private User patient;
     public static Integer countVisits = 1;
 
-    public Visit(Integer id, LocalDate date, LocalTime time, Doctor doctor) {
-        this.id = id;
+    public Visit(LocalDate date, LocalTime time, User doctor) {
+        this.id = countVisits++;
         this.date = date;
         this.time = time;
         this.doctor = doctor;
-        countVisits++;
+//        countVisits++;
 //        this.patient = null;
     }
 
@@ -32,11 +32,11 @@ public class Visit {
         return time;
     }
 
-    public Doctor getDoctor() {
+    public User getDoctor() {
         return doctor;
     }
 
-    public Patient getPatient() {
+    public User getPatient() {
         return patient;
     }
 

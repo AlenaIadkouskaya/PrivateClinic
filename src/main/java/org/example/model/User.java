@@ -14,6 +14,10 @@ public abstract class User {
         this.login = login;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
     public Integer getId() {
         return id;
     }
