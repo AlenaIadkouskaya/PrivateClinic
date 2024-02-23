@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.Utils;
 import org.example.model.Doctor;
 import org.example.model.User;
 import org.example.model.Visit;
@@ -7,23 +8,16 @@ import org.example.service.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Scanner;
 
 public class UserController {
     private static final Scanner scanner = new Scanner(System.in);
     private final LoginService loginService = new LoginServiceImpl();
+    private  final VisitServiceImpl visitService = new VisitServiceImpl();
 
     public void run() {
-        MenuService.printMainMenu();
-        String inputLogin = scanner.nextLine();
-        loginService.fakeUsers();
-        User login = loginService.login(inputLogin);
-        if (login instanceof Doctor) {
-            doctorMenuOptions(login);
-        } else {
-            patientMenuOptions(login);
-        }
-        scanner.close();
+        mainMenuOption(loginService);
     }
 
 //    public void run() {
@@ -52,8 +46,22 @@ public class UserController {
 //        }
 //    }
 
-    public static void doctorMenuOptions(User doctor) {
-        VisitService visitService = new VisitServiceImpl();
+
+    private void mainMenuOption(LoginService loginService){
+        MenuService.printMainMenu();
+        String inputLogin = scanner.nextLine();
+        loginService.fakeUsers();
+        User login = loginService.login(inputLogin);
+        if (login instanceof Doctor) {
+            doctorMenuOptions(login, loginService);
+        } else {
+            patientMenuOptions(login, loginService);
+        }
+        scanner.close();
+    }
+
+    public void doctorMenuOptions(User doctor, LoginService loginService) {
+        SearchService searchService = new SearchServiceImpl();
         boolean doctorMenu = true;
         while (doctorMenu) {
             MenuService.printDoctorMenu();
@@ -76,7 +84,6 @@ public class UserController {
                     scanner.nextLine();
                     visitService.addVisit(new Visit(LocalDate.of(year, month, day), LocalTime.of(hour, minute), doctor));
                     visitService.showVisit();
-
                     break;
                 case "3":
                     visitService.showVisit();
@@ -93,10 +100,18 @@ public class UserController {
                     visitService.canselVisit(id2);
                     break;
                 case "5":
-                    //for Search Visit
+                    System.out.print("Input year: ");
+                    Integer year1 = scanner.nextInt();
+                    System.out.print("Input month: ");
+                    Integer month1 = scanner.nextInt();
+                    System.out.print("Input day: ");
+                    Integer day1 = scanner.nextInt();
+                    scanner.nextLine();
+                    List<Visit> visits = searchService.searchVisit(LocalDate.of(year1, month1, day1), visitService.getListVisits());
+                    Utils.showToConsole(visits);
                     break;
                 case "6":
-                    doctorMenu = false;
+                    mainMenuOption(loginService);
                     break;
                 default:
                     throw new RuntimeException("Invalid option. Please choose a valid option.");
@@ -104,8 +119,8 @@ public class UserController {
         }
     }
 
-    public static void patientMenuOptions(User patient) {
-        VisitService visitService = new VisitServiceImpl();
+    public void patientMenuOptions(User patient, LoginService loginService) {
+        SearchService searchService = new SearchServiceImpl();
         boolean patientMenu = true;
         while (patientMenu) {
             MenuService.printPatientMenu();
@@ -115,13 +130,25 @@ public class UserController {
                     visitService.showVisit();
                     break;
                 case "2":
-//                    visitService.makeAppointment();
+                    visitService.showVisit();
+                    System.out.print("Input id: ");
+                    Integer id = scanner.nextInt();
+                    scanner.nextLine();
+                    visitService.makeAppointment(id, patient);
                     break;
                 case "3":
-                    //search
+                    System.out.print("Input year: ");
+                    Integer year1 = scanner.nextInt();
+                    System.out.print("Input month: ");
+                    Integer month1 = scanner.nextInt();
+                    System.out.print("Input day: ");
+                    Integer day1 = scanner.nextInt();
+                    scanner.nextLine();
+                    List<Visit> visits = searchService.searchVisit(LocalDate.of(year1, month1, day1), visitService.getListVisits());
+                    Utils.showToConsole(visits);
                     break;
                 case "4":
-                    patientMenu = false;
+                    mainMenuOption(loginService);
                     break;
                 default:
                     throw new RuntimeException("Invalid option. Please choose a valid option.");

@@ -3,6 +3,7 @@ package org.example.service;
 import org.example.Utils;
 import org.example.exception.ExceptionLackOfVisit;
 import org.example.model.Patient;
+import org.example.model.User;
 import org.example.model.Visit;
 
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class VisitServiceImpl implements VisitService {
-    Map<LocalDate, List<Visit>> listVisits;
+    private Map<LocalDate, List<Visit>> listVisits;
 
     public VisitServiceImpl() {
         this.listVisits = new HashMap<LocalDate, List<Visit>>();
@@ -87,7 +88,7 @@ public class VisitServiceImpl implements VisitService {
     }
 
     @Override
-    public void makeAppointment(Integer id, Patient patient) {
+    public void makeAppointment(Integer id, User patient) {
         boolean operationExecuted = false;
         for (Map.Entry<LocalDate, List<Visit>> entry : listVisits.entrySet()) {
             List<Visit> nextList = entry.getValue();
@@ -106,5 +107,9 @@ public class VisitServiceImpl implements VisitService {
         if (!operationExecuted) {
             throw new ExceptionLackOfVisit("This visit is not exist or there is other patient record for this time!");
         }
+    }
+
+    public Map<LocalDate, List<Visit>> getListVisits() {
+        return listVisits;
     }
 }
