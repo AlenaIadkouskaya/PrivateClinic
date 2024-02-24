@@ -127,6 +127,17 @@ public class VisitServiceImpl implements VisitService {
     }
 
     public Map<LocalDate, List<Visit>> getListVisits() {
-        return listVisits;
+        //return listVisits;
+        return cloneMap(listVisits);
+    }
+
+    private Map<LocalDate, List<Visit>> cloneMap(Map<LocalDate, List<Visit>> srcMap) {
+        Map<LocalDate, List<Visit>> destMap = new HashMap<>();
+        for (Map.Entry<LocalDate, List<Visit>> entry : listVisits.entrySet()) {
+            LocalDate currentKey = LocalDate.of(entry.getKey().getYear(), entry.getKey().getMonthValue(), entry.getKey().getDayOfMonth());
+            destMap.put(currentKey, new ArrayList<>(entry.getValue()));
+        }
+        return destMap;
+
     }
 }
