@@ -14,7 +14,7 @@ public class MenuService {
 
     public static void printMainMenu() {
         System.out.println();
-        System.out.println("PRIVATE LIBRARY");
+        System.out.println("PRIVATE CLINIC");
         System.out.print("Enter your login: ");
     }
 

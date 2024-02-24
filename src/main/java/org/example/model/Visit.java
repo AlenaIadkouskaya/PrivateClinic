@@ -2,6 +2,7 @@ package org.example.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Visit {
@@ -42,5 +43,17 @@ public class Visit {
 
     public void setPatient(User patient) {
         this.patient = patient;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Visit visit = (Visit) o;
+        return Objects.equals(date, visit.date) && Objects.equals(time, visit.time) && Objects.equals(doctor, visit.doctor) && Objects.equals(patient, visit.patient);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, date, time, doctor, patient);
     }
 }

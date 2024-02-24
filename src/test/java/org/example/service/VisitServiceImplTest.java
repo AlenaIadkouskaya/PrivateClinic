@@ -26,7 +26,41 @@ public class VisitServiceImplTest extends TestCase {
         //when
         visitService.addVisit(newVisit);
         //then
-        assertThat(visitService.listVisits.get(LocalDate.of(2024, 3, 1)).size()).isEqualTo(1);
+        assertThat(visitService.getListVisits().get(LocalDate.of(2024, 3, 1)).size()).isEqualTo(1);
+    }
+
+    @Test
+    public void test_add_visit_twice() {
+        //given
+        Visit newVisit = new Visit(LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
+                new Doctor(1, "d1", "d2", "l1", Specialization.ALLERGIST));
+        VisitServiceImpl visitService = new VisitServiceImpl();
+        visitService.addVisit(newVisit);
+        try {
+            //when
+            visitService.addVisit(newVisit);
+        } catch (ExceptionLackOfVisit e) {
+            //then
+            assertThat(e.getMessage()).isNotEqualTo("");
+        }
+    }
+
+    @Test
+    public void test_add_visit_twice_with_same_parametrs() {
+        //given
+        Visit firstVisit = new Visit(LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
+                new Doctor(1, "d1", "d2", "l1", Specialization.ALLERGIST));
+        VisitServiceImpl visitService = new VisitServiceImpl();
+        visitService.addVisit(firstVisit);
+        Visit secondVisit = new Visit(LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
+                new Doctor(1, "d1", "d2", "l1", Specialization.ALLERGIST));
+        try {
+            //when
+            visitService.addVisit(secondVisit);
+        } catch (ExceptionLackOfVisit e) {
+            //then
+            assertThat(e.getMessage()).isNotEqualTo("");
+        }
     }
 
     @Test
@@ -41,7 +75,7 @@ public class VisitServiceImplTest extends TestCase {
         //when
         visitService.addVisit(newVisit);
         //then
-        assertThat(visitService.listVisits.get(LocalDate.of(2024, 3, 1)).size()).isEqualTo(2);
+        assertThat(visitService.getListVisits().get(LocalDate.of(2024, 3, 1)).size()).isEqualTo(2);
     }
 
     @Test
@@ -59,8 +93,8 @@ public class VisitServiceImplTest extends TestCase {
         //when
         visitService.addVisit(nextVisit);
         //then
-        assertThat(visitService.listVisits.get(LocalDate.of(2024, 4, 1)).size()).isEqualTo(1);
-        assertThat(visitService.listVisits.get(LocalDate.of(2024, 3, 1)).size()).isEqualTo(2);
+        assertThat(visitService.getListVisits().get(LocalDate.of(2024, 4, 1)).size()).isEqualTo(1);
+        assertThat(visitService.getListVisits().get(LocalDate.of(2024, 3, 1)).size()).isEqualTo(2);
     }
 
     @Test
@@ -92,7 +126,7 @@ public class VisitServiceImplTest extends TestCase {
         //when
         visitService.deleteVisit(2);
         //then
-        assertThat(visitService.listVisits.get(LocalDate.of(2024, 3, 1)).size()).isEqualTo(1);
+        assertThat(visitService.getListVisits().get(LocalDate.of(2024, 3, 1)).size()).isEqualTo(1);
     }
 
     @Test
@@ -159,7 +193,7 @@ public class VisitServiceImplTest extends TestCase {
         //when
         visitService.makeAppointment(Visit.countVisits - 1, newPatient);
         //then
-        assertThat(visitService.listVisits.get(LocalDate.of(2024, 3, 1)).get(0).getPatient()).isEqualTo(newPatient);
+        assertThat(visitService.getListVisits().get(LocalDate.of(2024, 3, 1)).get(0).getPatient()).isEqualTo(newPatient);
         visitService.showVisit();
     }
 
@@ -200,6 +234,7 @@ public class VisitServiceImplTest extends TestCase {
             assertThat(e.getMessage()).isNotEqualTo("");
         }
     }
+
     @Test
     public void test_search_with_help_date() {
         //given
@@ -215,7 +250,7 @@ public class VisitServiceImplTest extends TestCase {
                 new Doctor(1, "n3", "s3", "l3", Specialization.ALLERGIST));
         visitService.addVisit(nextVisit);
         //when
-        List<Visit> listSearchVisits = searchService.searchVisit(LocalDate.of(2024, 3, 1), visitService.listVisits);
+        List<Visit> listSearchVisits = searchService.searchVisit(LocalDate.of(2024, 3, 1), visitService.getListVisits());
         Utils.showToConsole(listSearchVisits);
         //then
         assertThat(listSearchVisits.size()).isEqualTo(2);

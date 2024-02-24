@@ -24,6 +24,10 @@ public class VisitServiceImpl implements VisitService {
         if (visit == null) {
             throw new NullPointerException("Visit can't be empty!");
         }
+        boolean thisVisitExist = checkAllVisits(visit);
+        if (thisVisitExist) {
+            throw new ExceptionLackOfVisit("You can't add visit with specified parameters!");
+        }
         LocalDate dateOfVisit = visit.getDate();
         List<Visit> currentListOfVisits = listVisits.get(dateOfVisit);
         if (currentListOfVisits == null) {
@@ -31,6 +35,19 @@ public class VisitServiceImpl implements VisitService {
         }
         currentListOfVisits.add(visit);
         listVisits.put(dateOfVisit, currentListOfVisits);
+    }
+
+    private boolean checkAllVisits(Visit visit) {
+        for (Map.Entry<LocalDate, List<Visit>> entry : listVisits.entrySet()) {
+            List<Visit> nextList = entry.getValue();
+            for (int i = 0; i < nextList.size(); i++) {
+                Visit nextVisit = nextList.get(i);
+                if (nextVisit.equals(visit)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override
@@ -63,7 +80,7 @@ public class VisitServiceImpl implements VisitService {
             for (int i = 0; i < nextList.size(); i++) {
                 Visit nextVisit = nextList.get(i);
                 if (nextVisit.getId().equals(id) && nextVisit.getPatient() != null) {
-                    nextList.set(i, null);
+                    nextVisit.setPatient(null);
                     operationExecuted = true;
                     break;
                 }
