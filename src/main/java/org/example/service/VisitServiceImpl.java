@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class VisitServiceImpl implements VisitService {
-    public Map<LocalDate, List<Visit>> listVisits;
+    private Map<LocalDate, List<Visit>> listVisits;
 
     public VisitServiceImpl() {
         this.listVisits = new HashMap<LocalDate, List<Visit>>();
