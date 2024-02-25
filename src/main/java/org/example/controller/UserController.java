@@ -17,15 +17,16 @@ public class UserController {
     private final VisitServiceImpl visitService = new VisitServiceImpl();
 
     public void run() {
-        Utils.getUsersFromFile();
+        List<User> listOfUsers = Utils.getUsersFromFile();
+        loginService.setUsers(listOfUsers);
         mainMenuOption(loginService);
     }
 
     private void mainMenuOption(LoginService loginService) {
         MenuService.printMainMenu();
         String inputLogin = scanner.nextLine();
-//        Utils.getUsersFromFile();
-//        loginService.fakeUsers();
+        //Utils.getUsersFromFile();
+        //loginService.fakeUsers();
         User login = loginService.login(inputLogin);
         if (login instanceof Doctor) {
             doctorMenuOptions(login, loginService);

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoginServiceImpl implements LoginService {
-    public final List<User> users = new ArrayList<>();
+    public List<User> users = new ArrayList<>();
 
     @Override
     public void fakeUsers() {
@@ -31,5 +31,10 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public List<User> getUsers() {
         return users;
+    }
+
+    @Override
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }

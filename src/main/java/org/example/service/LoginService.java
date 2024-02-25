@@ -8,4 +8,5 @@ public interface LoginService {
     void fakeUsers();
     User login (String login);
     List<User> getUsers();
+    void setUsers(List<User> users);
 }
