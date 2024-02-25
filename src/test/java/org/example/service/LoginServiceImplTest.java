@@ -26,12 +26,14 @@ public class LoginServiceImplTest {
         User doctor = new Doctor(2, "Doctor", "Doctor", "doctor1", Specialization.CARDIOLOGIST);
         users.add(patient);
         users.add(doctor);
+        loginService.fakeUsers();
+//        loginService.users();
 
-        //when
-        try {
-        } catch (NullPointerException e) {
-            //then
-            assertThat(e.getMessage()).isNotEqualTo("doctor1");
-        }
+        // when
+        User zalogowanyUżytkownik = loginService.login("doctor1");
+
+        // then
+        assertThat(zalogowanyUżytkownik).isNotNull();
+        assertThat(zalogowanyUżytkownik.getLogin()).isEqualTo("doctor1");
     }
 }

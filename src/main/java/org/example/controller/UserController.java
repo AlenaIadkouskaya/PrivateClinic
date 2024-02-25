@@ -89,9 +89,9 @@ public class UserController {
                 case "6":
                     mainMenuOption(loginService);
                     break;
-//                case "7":
-//                    doctorMenu = false;
-//                    break;
+                case "7":
+                    doctorMenu = false;
+                    break;
                 default:
                     throw new ExceptionLackOfVisit("Invalid option. Please choose a valid option.");
             }
@@ -129,9 +129,9 @@ public class UserController {
                 case "4":
                     mainMenuOption(loginService);
                     break;
-//                case "5":
-//                    patientMenu = false;
-//                    break;
+                case "5":
+                    patientMenu = false;
+                    break;
                 default:
                     throw new ExceptionLackOfVisit("Invalid option. Please choose a valid option.");
             }
