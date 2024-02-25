@@ -56,4 +56,9 @@ public class Visit {
     public int hashCode() {
         return Objects.hash(id, date, time, doctor, patient);
     }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }
