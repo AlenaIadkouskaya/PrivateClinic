@@ -27,4 +27,9 @@ public class LoginServiceImpl implements LoginService {
         }
         throw new ExceptionLackOfVisit("Not found User");
     }
+
+    @Override
+    public List<User> getUsers() {
+        return users;
+    }
 }

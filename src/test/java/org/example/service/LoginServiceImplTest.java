@@ -27,13 +27,12 @@ public class LoginServiceImplTest {
         users.add(patient);
         users.add(doctor);
         loginService.fakeUsers();
-//        loginService.users();
 
         // when
-        User zalogowanyUżytkownik = loginService.login("doctor1");
+        User login = loginService.login("doctor1");
 
         // then
-        assertThat(zalogowanyUżytkownik).isNotNull();
-        assertThat(zalogowanyUżytkownik.getLogin()).isEqualTo("doctor1");
+        assertThat(login).isNotNull();
+        assertThat(login.getLogin()).isEqualTo("doctor1");
     }
 }
