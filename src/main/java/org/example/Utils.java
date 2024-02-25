@@ -10,6 +10,7 @@ public class Utils {
     }
 
     public static void showToConsole(List<Visit> listToShow) {
+        System.out.println();
         System.out.println("LIST OF VISITS\n");
         System.out.println("-------------------------------------------------------------------------------------------");
         System.out.println("|  ID  |    Data    |  Time  |            Doctor            |           Patient           |");
