@@ -10,8 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoginServiceImpl implements LoginService {
-
-    List<User> users = new ArrayList<>();
+    public final List<User> users = new ArrayList<>();
 
     @Override
     public void fakeUsers() {
