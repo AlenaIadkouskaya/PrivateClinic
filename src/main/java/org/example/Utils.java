@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.model.*;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
@@ -67,7 +68,7 @@ public class Utils {
 //        }
 //    }
 
-    public static void getUsersFromFile() {
+    public static List<User> getUsersFromFile() {
         Path filePath = Path.of("users.txt");
         List<User> users = new ArrayList<>();
         try {
@@ -84,13 +85,16 @@ public class Utils {
                 if (numberTelephone.equals("-")) {
                     User doctor = new Doctor(id, name, surname, login, specialization);
                     users.add(doctor);
+                } else {
+                    User patient = new Patient(id, name, surname, login, numberTelephone);
+                    users.add(patient);
                 }
-                User patient = new Patient(id, name, surname, login, numberTelephone);
-                users.add(patient);
             }
+
         } catch (IOException e) {
             System.out.println("Error. Cannot read file");
         }
+        return users;
     }
 
     private static Specialization checkSpecialization(String str) {
