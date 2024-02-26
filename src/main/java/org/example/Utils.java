@@ -2,13 +2,16 @@ package org.example;
 
 import org.example.model.*;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Utils {
     private Utils() {
@@ -38,7 +41,7 @@ public class Utils {
         return retundWork;
     }
 
-    public static void writeToFile(List<User> users) {
+    public static void writeToFileUsers(List<User> users) {
         try {
             PrintWriter printWriter = new PrintWriter("users.txt", StandardCharsets.UTF_8);
             for (User user : users) {
@@ -55,31 +58,31 @@ public class Utils {
         }
     }
 
-//    public static void readFromFile() {
-//        try {
-//            Scanner scanner = new Scanner(new File("users.txt"));
-//            while (scanner.hasNext()) {
-//                System.out.println(scanner.next());
-//                getUsersFromFile();
-//            }
-//            scanner.close();
-//        } catch (FileNotFoundException e) {
-//            System.out.println("File not found");
-//        }
-//    }
+    public static void writeToFileVisits(Map<LocalDate, List<Visit>> listVisits) {
+        try {
+            PrintWriter printWriter = new PrintWriter("visits.txt", StandardCharsets.UTF_8);
+            for (Map.Entry<LocalDate, List<Visit>> entry : listVisits.entrySet()) {
+                for (Visit visit : entry.getValue()) {
+                    printWriter.println(entry.getKey() + ";" + visit.getId() + ";" + visit.getTime() + ";" + visit.getDoctor().getId());
+                }
+            }
+            printWriter.close();
+        } catch (IOException e) {
+            System.out.println("Error. Something went wrong");
+        }
+    }
 
     public static List<User> getUsersFromFile() {
-        Path filePath = Path.of("users.txt");
+        Path filePathUsers = Path.of("users.txt");
         List<User> users = new ArrayList<>();
         try {
-            List<String> lines = Files.readAllLines(filePath);
+            List<String> lines = Files.readAllLines(filePathUsers);
             for (String line : lines) {
                 String[] strings = line.split(";");
                 int id = Integer.parseInt(strings[0].trim());
                 String name = strings[1].trim();
                 String surname = strings[2].trim();
                 String login = strings[3].trim();
-//                Specialization specialization = Specialization.valueOf(strings[4].trim());
                 Specialization specialization = checkSpecialization(strings[4].trim());
                 String numberTelephone = strings[5].trim();
                 if (numberTelephone.equals("-")) {
@@ -90,11 +93,41 @@ public class Utils {
                     users.add(patient);
                 }
             }
-
         } catch (IOException e) {
             System.out.println("Error. Cannot read file");
         }
         return users;
+    }
+
+    public static Map<LocalDate, List<Visit>> getVisitsFromFile() {
+        Path filePathVisits = Path.of("visits.txt");
+        Map<LocalDate, List<Visit>> mapVisit = new HashMap<>();
+        List<Visit> visits = new ArrayList<>();
+        try {
+            List<String> lines = Files.readAllLines(filePathVisits);
+            for (String line : lines) {
+                String[] strings = line.split(";");
+                LocalDate date = LocalDate.parse(strings[0].trim());
+                int id = Integer.parseInt(strings[1].trim());
+                LocalTime time = LocalTime.parse(strings[2].trim());
+                String idDoctor = strings[3].trim();
+                Visit visit = new Visit(date, time, getDoctorFromId(idDoctor));
+                visits.add(visit);
+                mapVisit.put(date, visits);
+            }
+        } catch (IOException e) {
+            System.out.println("Error. Cannot read file");
+        }
+        return mapVisit;
+    }
+
+    private static User getDoctorFromId(String idDoctor) {
+        for (User user : getUsersFromFile()) {
+            if (user.getId().equals(Integer.parseInt(idDoctor))) {
+                return user;
+            }
+        }
+        return null;
     }
 
     private static Specialization checkSpecialization(String str) {
@@ -105,4 +138,5 @@ public class Utils {
         }
         return null;
     }
+
 }

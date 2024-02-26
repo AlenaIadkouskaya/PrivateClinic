@@ -138,6 +138,10 @@ public class VisitServiceImpl implements VisitService {
             destMap.put(currentKey, new ArrayList<>(entry.getValue()));
         }
         return destMap;
+    }
 
+    @Override
+    public void setListVisits(Map<LocalDate, List<Visit>> listVisits) {
+        this.listVisits = listVisits;
     }
 }
