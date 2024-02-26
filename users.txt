@@ -1,0 +1,2 @@
+1;PatientName;PatientSurname;patient1;-;322-322-322
+2;DoctorName;DoctorSurname;doctor1;CARDIOLOGIST;-
