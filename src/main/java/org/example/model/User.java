@@ -13,7 +13,6 @@ public abstract class User {
         this.name = name;
         this.surname = surname;
         this.login = login;
-        this.login = login;
         this.password = password;
     }
 

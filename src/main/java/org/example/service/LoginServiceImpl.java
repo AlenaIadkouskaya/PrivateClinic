@@ -14,14 +14,14 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public void fakeUsers() {
-        users.add(new Patient(1, "Patient", "Patient", "patient1", "322-322-322"));
-        users.add(new Doctor(2, "Doctor", "Doctor", "doctor1", Specialization.CARDIOLOGIST));
+        users.add(new Patient(1, "Patient", "Patient", "patient1", "111", "322-322-322"));
+        users.add(new Doctor(2, "Doctor", "Doctor", "doctor1", "222", Specialization.CARDIOLOGIST));
     }
 
     @Override
-    public User login(String login,String password) {
+    public User login(String login, String password) {
         for (User user : users) {
-            if (user.getLogin().equalsIgnoreCase(login)&&user.getPassword().equalsIgnoreCase(password)) {
+            if (user.getLogin().equalsIgnoreCase(login) && user.getPassword().equalsIgnoreCase(password)) {
                 return user;
             }
         }

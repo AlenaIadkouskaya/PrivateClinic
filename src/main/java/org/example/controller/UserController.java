@@ -28,9 +28,11 @@ public class UserController {
     private void mainMenuOption(LoginService loginService) {
         MenuService.printMainMenu();
         String inputLogin = scanner.nextLine();
+        System.out.print("Enter your Password: ");
+        String inputPassword = scanner.nextLine();
         //Utils.getUsersFromFile();
         //loginService.fakeUsers();
-        User login = loginService.login(inputLogin);
+        User login = loginService.login(inputLogin, inputPassword);
         if (login instanceof Doctor) {
             doctorMenuOptions(login, loginService);
         } else {
