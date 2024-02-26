@@ -34,7 +34,8 @@ public class AppTest extends TestCase {
         loginService.setUsers(listOfUsers);
 
         String login = "doctor1";
-        User currentUser = loginService.login(login);
+        String password = "111";
+        User currentUser = loginService.login(login, password);
 
         Visit newVisitAt9 = new Visit(LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
                 currentUser);
@@ -43,7 +44,7 @@ public class AppTest extends TestCase {
         visitService.addVisit(newVisitAt9);
         visitService.addVisit(newVisitAt10);
 
-        currentUser = loginService.login("patient1");
+        currentUser = loginService.login("patient1","222");
 
         visitService.makeAppointment(1, currentUser);
         //when
@@ -68,7 +69,8 @@ public class AppTest extends TestCase {
         loginService.setUsers(listOfUsers);
 
         String login = "doctor1";
-        User currentUser = loginService.login(login);
+        String password = "111";
+        User currentUser = loginService.login(login, password);
 
         Visit newVisitAt9 = new Visit(LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
                 currentUser);
@@ -77,7 +79,7 @@ public class AppTest extends TestCase {
         visitService.addVisit(newVisitAt9);
         visitService.addVisit(newVisitAt10);
 
-        currentUser = loginService.login("patient1");
+        currentUser = loginService.login("patient1","222");
 
         visitService.makeAppointment(1, currentUser);
         List<Visit> currentRecords = new ArrayList<>();
@@ -85,7 +87,6 @@ public class AppTest extends TestCase {
         try {
             visitService.deleteVisit(2);
             visitService.deleteVisit(1);
-
         }
         catch (ExceptionLackOfVisit e){
             //then

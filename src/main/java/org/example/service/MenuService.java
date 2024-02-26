@@ -7,7 +7,6 @@ public class MenuService {
         System.out.println();
         System.out.println("PRIVATE CLINIC");
         System.out.print("Enter your login: ");
-        //System.out.print("Enter your Password: ");
     }
 
     public static void printDoctorMenu() {
@@ -39,16 +38,4 @@ public class MenuService {
         System.out.println();
         System.out.print("Input options: ");
     }
-
-//    public static Integer[] inputDate() {
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.print("Input year: ");
-//        int year = scanner.nextInt();
-//        System.out.print("Input month: ");
-//        int month = scanner.nextInt();
-//        System.out.print("Input day: ");
-//        int day = scanner.nextInt();
-//        scanner.close();
-//        return new Integer[]{year, month, day};
-//    }
 }
