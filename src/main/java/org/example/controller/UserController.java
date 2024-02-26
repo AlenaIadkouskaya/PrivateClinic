@@ -9,6 +9,7 @@ import org.example.service.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class UserController {
@@ -19,6 +20,8 @@ public class UserController {
     public void run() {
         List<User> listOfUsers = Utils.getUsersFromFile();
         loginService.setUsers(listOfUsers);
+        Map<LocalDate, List<Visit>> visitsFromFile = Utils.getVisitsFromFile();
+        visitService.setListVisits(visitsFromFile);
         mainMenuOption(loginService);
     }
 
@@ -90,7 +93,8 @@ public class UserController {
                         mainMenuOption(loginService);
                         break;
                     case "7":
-                        Utils.writeToFile(loginService.getUsers());
+                        Utils.writeToFileUsers(loginService.getUsers());
+                        Utils.writeToFileVisits(visitService.getListVisits());
                         System.exit(0);
                         break;
                     default:
@@ -134,7 +138,8 @@ public class UserController {
                         mainMenuOption(loginService);
                         break;
                     case "5":
-                        Utils.writeToFile(loginService.getUsers());
+                        Utils.writeToFileUsers(loginService.getUsers());
+                        Utils.writeToFileVisits(visitService.getListVisits());
                         System.exit(0);
                         break;
                     default:
