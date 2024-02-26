@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import org.example.Utils;
+import org.example.exception.ExceptionLackOfVisit;
 import org.example.model.Doctor;
 import org.example.model.User;
 import org.example.model.Visit;
@@ -14,8 +15,13 @@ import java.util.Scanner;
 
 public class UserController {
     private static final Scanner scanner = new Scanner(System.in);
-    private final LoginService loginService = new LoginServiceImpl();
-    private final VisitServiceImpl visitService = new VisitServiceImpl();
+    private LoginService loginService;
+    private VisitServiceImpl visitService;
+
+    public UserController(LoginService loginService, VisitServiceImpl visitService) {
+        this.loginService = loginService;
+        this.visitService = visitService;
+    }
 
     public void run() {
         List<User> listOfUsers = Utils.getUsersFromFile();
@@ -52,18 +58,9 @@ public class UserController {
                         visitService.showVisit();
                         break;
                     case "2":
-                        System.out.print("Input year: ");
-                        int year = scanner.nextInt();
-                        System.out.print("Input month: ");
-                        int month = scanner.nextInt();
-                        System.out.print("Input day: ");
-                        int day = scanner.nextInt();
-                        System.out.print("Input hour: ");
-                        int hour = scanner.nextInt();
-                        System.out.print("Input minute: ");
-                        int minute = scanner.nextInt();
-                        scanner.nextLine();
-                        visitService.addVisit(new Visit(LocalDate.of(year, month, day), LocalTime.of(hour, minute), doctor));
+                        LocalDate dateForAdd = getLocalDateFromConsole(scanner);
+                        LocalTime timeForAdd = getLocalTimeFromConsole(scanner);
+                        visitService.addVisit(new Visit(dateForAdd, timeForAdd, doctor));
                         visitService.showVisit();
                         break;
                     case "3":
@@ -81,14 +78,8 @@ public class UserController {
                         visitService.canselVisit(id2);
                         break;
                     case "5":
-                        System.out.print("Input year: ");
-                        int year1 = scanner.nextInt();
-                        System.out.print("Input month: ");
-                        int month1 = scanner.nextInt();
-                        System.out.print("Input day: ");
-                        int day1 = scanner.nextInt();
-                        scanner.nextLine();
-                        List<Visit> visits = searchService.searchVisit(LocalDate.of(year1, month1, day1), visitService.getListVisits());
+                        LocalDate dateForSearch = getLocalDateFromConsole(scanner);
+                        List<Visit> visits = searchService.searchVisit(dateForSearch, visitService.getListVisits());
                         Utils.showToConsole(visits);
                         break;
                     case "6":
@@ -102,10 +93,33 @@ public class UserController {
                     default:
                         throw new RuntimeException("Invalid option. Please choose a valid option.");
                 }
+            } catch (ExceptionLackOfVisit e) {
+                System.out.println(e.getMessage());
             } catch (RuntimeException e) {
                 System.out.println("Input correct number menu");
             }
         }
+    }
+
+    private LocalTime getLocalTimeFromConsole(Scanner scanner) {
+        System.out.print("Input hour: ");
+        int hour = scanner.nextInt();
+        System.out.print("Input minute: ");
+        int minute = scanner.nextInt();
+        scanner.nextLine();
+        return LocalTime.of(hour, minute);
+    }
+
+    private static LocalDate getLocalDateFromConsole(Scanner scanner) {
+        System.out.print("Input year: ");
+        int year = scanner.nextInt();
+        System.out.print("Input month: ");
+        int month = scanner.nextInt();
+        System.out.print("Input day: ");
+        int day = scanner.nextInt();
+        LocalDate receiveDate = LocalDate.of(year, month, day);
+        scanner.nextLine();
+        return receiveDate;
     }
 
     public void patientMenuOptions(User patient, LoginService loginService) {
@@ -126,14 +140,8 @@ public class UserController {
                         visitService.makeAppointment(id, patient);
                         break;
                     case "3":
-                        System.out.print("Input year: ");
-                        int year1 = scanner.nextInt();
-                        System.out.print("Input month: ");
-                        int month1 = scanner.nextInt();
-                        System.out.print("Input day: ");
-                        int day1 = scanner.nextInt();
-                        scanner.nextLine();
-                        List<Visit> visits = searchService.searchVisit(LocalDate.of(year1, month1, day1), visitService.getListVisits());
+                        LocalDate dateForSearch = getLocalDateFromConsole(scanner);
+                        List<Visit> visits = searchService.searchVisit(dateForSearch, visitService.getListVisits());
                         Utils.showToConsole(visits);
                         break;
                     case "4":

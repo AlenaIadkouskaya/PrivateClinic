@@ -126,7 +126,7 @@ public class Utils {
 
     private static User getDoctorFromId(String idDoctor) {
         for (User user : getUsersFromFile()) {
-            if (user.getId().equals(Integer.parseInt(idDoctor))) {
+            if (user.getId().equals(Integer.parseInt(idDoctor)) && (user instanceof Doctor)) {
                 return user;
             }
         }
