@@ -19,9 +19,9 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public User login(String login) {
+    public User login(String login,String password) {
         for (User user : users) {
-            if (user.getLogin().equalsIgnoreCase(login)) {
+            if (user.getLogin().equalsIgnoreCase(login)&&user.getPassword().equalsIgnoreCase(password)) {
                 return user;
             }
         }

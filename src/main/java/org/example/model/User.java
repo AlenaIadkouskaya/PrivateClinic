@@ -6,12 +6,15 @@ public abstract class User {
     private String surname;
     private String login;
 
-    public User(Integer id, String name, String surname, String login) {
+    private String password;
+
+    public User(Integer id, String name, String surname, String login, String password) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.login = login;
         this.login = login;
+        this.password = password;
     }
 
     public String getLogin() {
@@ -28,6 +31,10 @@ public abstract class User {
 
     public String getSurname() {
         return surname;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     @Override
