@@ -46,10 +46,12 @@ public class Utils {
             PrintWriter printWriter = new PrintWriter("users.txt", StandardCharsets.UTF_8);
             for (User user : users) {
                 if (user instanceof Doctor) {
-                    printWriter.println(user.getId() + ";" + user.getName() + ";" + user.getSurname() + ";" + user.getLogin() + ";" + ((Doctor) user).getSpecialization() + ";" + "-");
+                    printWriter.println(user.getId() + ";" + user.getName() + ";" + user.getSurname() + ";" + user.getLogin() + ";" + user.getPassword() + ";" +
+                            ((Doctor) user).getSpecialization() + ";" + "-");
                 }
                 if (user instanceof Patient) {
-                    printWriter.println(user.getId() + ";" + user.getName() + ";" + user.getSurname() + ";" + user.getLogin() + ";" + "-" + ";" + ((Patient) user).getNumberTelephone());
+                    printWriter.println(user.getId() + ";" + user.getName() + ";" + user.getSurname() + ";" + user.getLogin() + ";" + user.getPassword() + ";" +
+                            "-" + ";" + ((Patient) user).getNumberTelephone());
                 }
             }
             printWriter.close();
@@ -83,13 +85,14 @@ public class Utils {
                 String name = strings[1].trim();
                 String surname = strings[2].trim();
                 String login = strings[3].trim();
-                Specialization specialization = checkSpecialization(strings[4].trim());
-                String numberTelephone = strings[5].trim();
+                String password = strings[4].trim();
+                Specialization specialization = checkSpecialization(strings[5].trim());
+                String numberTelephone = strings[6].trim();
                 if (numberTelephone.equals("-")) {
-                    User doctor = new Doctor(id, name, surname, login, specialization);
+                    User doctor = new Doctor(id, name, surname, login, password, specialization);
                     users.add(doctor);
                 } else {
-                    User patient = new Patient(id, name, surname, login, numberTelephone);
+                    User patient = new Patient(id, name, surname, login, password, numberTelephone);
                     users.add(patient);
                 }
             }

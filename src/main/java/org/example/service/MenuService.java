@@ -7,7 +7,7 @@ public class MenuService {
         System.out.println();
         System.out.println("PRIVATE CLINIC");
         System.out.print("Enter your login: ");
-        System.out.print("Enter your Password: ");
+        //System.out.print("Enter your Password: ");
     }
 
     public static void printDoctorMenu() {
