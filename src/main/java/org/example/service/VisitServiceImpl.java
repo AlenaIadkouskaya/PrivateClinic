@@ -143,5 +143,6 @@ public class VisitServiceImpl implements VisitService {
     @Override
     public void setListVisits(Map<LocalDate, List<Visit>> listVisits) {
         this.listVisits = listVisits;
+        Visit.countVisits = listVisits.size() + 1;
     }
 }

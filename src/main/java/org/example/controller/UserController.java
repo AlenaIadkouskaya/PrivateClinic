@@ -3,6 +3,7 @@ package org.example.controller;
 import org.example.Utils;
 import org.example.exception.ExceptionLackOfVisit;
 import org.example.model.Doctor;
+import org.example.model.Specialization;
 import org.example.model.User;
 import org.example.model.Visit;
 import org.example.service.*;
@@ -32,18 +33,27 @@ public class UserController {
     }
 
     private void mainMenuOption(LoginService loginService) {
-        MenuService.printMainMenu();
-        String inputLogin = scanner.nextLine();
-        System.out.print("Enter your Password: ");
-        String inputPassword = scanner.nextLine();
-        //Utils.getUsersFromFile();
-        //loginService.fakeUsers();
-        User login = loginService.login(inputLogin, inputPassword);
-        if (login instanceof Doctor) {
-            doctorMenuOptions(login, loginService);
-        } else {
-            patientMenuOptions(login, loginService);
+        User login = null;
+        while (login == null) {
+            MenuService.printMainMenu();
+            String inputLogin = scanner.nextLine();
+            System.out.print("Enter your Password: ");
+            String inputPassword = scanner.nextLine();
+            //Utils.getUsersFromFile();
+            //loginService.fakeUsers();
+
+            try {
+                login = loginService.login(inputLogin, inputPassword);
+                if (login instanceof Doctor) {
+                    doctorMenuOptions(login, loginService);
+                } else {
+                    patientMenuOptions(login, loginService);
+                }
+            } catch (ExceptionLackOfVisit e) {
+                System.out.println(e.getMessage());
+            }
         }
+
         scanner.close();
     }
 
@@ -58,9 +68,9 @@ public class UserController {
                         visitService.showVisit();
                         break;
                     case "2":
-                        LocalDate dateForAdd = getLocalDateFromConsole(scanner);
-                        LocalTime timeForAdd = getLocalTimeFromConsole(scanner);
-                        visitService.addVisit(new Visit(dateForAdd, timeForAdd, doctor));
+                        //LocalDate dateForAdd = getLocalDateFromConsole(scanner);
+                        //LocalTime timeForAdd = getLocalTimeFromConsole(scanner);
+                        visitService.addVisit(new Visit(getLocalDateFromConsole(scanner), getLocalTimeFromConsole(scanner), doctor));
                         visitService.showVisit();
                         break;
                     case "3":
@@ -78,8 +88,8 @@ public class UserController {
                         visitService.canselVisit(id2);
                         break;
                     case "5":
-                        LocalDate dateForSearch = getLocalDateFromConsole(scanner);
-                        List<Visit> visits = searchService.searchVisit(dateForSearch, visitService.getListVisits());
+                        //LocalDate dateForSearch = getLocalDateFromConsole(scanner);
+                        List<Visit> visits = searchService.searchVisit(getLocalDateFromConsole(scanner), visitService.getListVisits());
                         Utils.showToConsole(visits);
                         break;
                     case "6":
@@ -140,8 +150,8 @@ public class UserController {
                         visitService.makeAppointment(id, patient);
                         break;
                     case "3":
-                        LocalDate dateForSearch = getLocalDateFromConsole(scanner);
-                        List<Visit> visits = searchService.searchVisit(dateForSearch, visitService.getListVisits());
+                        //LocalDate dateForSearch = getLocalDateFromConsole(scanner);
+                        List<Visit> visits = searchService.searchVisit(getLocalDateFromConsole(scanner), visitService.getListVisits());
                         Utils.showToConsole(visits);
                         break;
                     case "4":
@@ -155,6 +165,8 @@ public class UserController {
                     default:
                         throw new RuntimeException("Invalid option. Please choose a valid option.");
                 }
+            } catch (ExceptionLackOfVisit e) {
+                System.out.println(e.getMessage());
             } catch (RuntimeException e) {
                 System.out.println("Input correct number menu");
             }
