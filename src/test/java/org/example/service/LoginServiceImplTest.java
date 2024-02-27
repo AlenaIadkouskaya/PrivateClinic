@@ -6,7 +6,9 @@ import org.example.model.Doctor;
 import org.example.model.Patient;
 import org.example.model.Specialization;
 import org.example.model.User;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 import java.util.ArrayList;
 import java.util.List;

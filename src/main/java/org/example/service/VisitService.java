@@ -21,4 +21,5 @@ public interface VisitService {
     void makeAppointment(Integer id, User patient);
 
     void setListVisits(Map<LocalDate, List<Visit>> listVisits);
+    Map<LocalDate, List<Visit>> getListVisits();
 }

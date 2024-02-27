@@ -16,8 +16,8 @@ import java.util.Scanner;
 
 public class UserController {
     private static final Scanner scanner = new Scanner(System.in);
-    private LoginService loginService;
-    private VisitServiceImpl visitService;
+    private final LoginService loginService;
+    private final VisitService visitService;
 
     public UserController(LoginService loginService, VisitServiceImpl visitService) {
         this.loginService = loginService;
@@ -79,6 +79,7 @@ public class UserController {
                         Integer id = scanner.nextInt();
                         scanner.nextLine();
                         visitService.deleteVisit(id);
+                        visitService.showVisit();
                         break;
                     case "4":
                         visitService.showVisit();
@@ -86,6 +87,7 @@ public class UserController {
                         Integer id2 = scanner.nextInt();
                         scanner.nextLine();
                         visitService.canselVisit(id2);
+                        visitService.showVisit();
                         break;
                     case "5":
                         //LocalDate dateForSearch = getLocalDateFromConsole(scanner);
@@ -148,6 +150,7 @@ public class UserController {
                         Integer id = scanner.nextInt();
                         scanner.nextLine();
                         visitService.makeAppointment(id, patient);
+                        visitService.showVisit();
                         break;
                     case "3":
                         //LocalDate dateForSearch = getLocalDateFromConsole(scanner);

@@ -9,8 +9,6 @@ import java.util.Map;
 public class SearchServiceImpl implements SearchService{
     @Override
     public List<Visit> searchVisit(LocalDate date, Map<LocalDate, List<Visit>> listVisits) {
-
         return listVisits.get(date);
-
     }
 }
