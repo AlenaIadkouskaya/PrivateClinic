@@ -16,7 +16,7 @@ public class VisitServiceImpl implements VisitService {
     private Map<LocalDate, List<Visit>> listVisits;
 
     public VisitServiceImpl() {
-        this.listVisits = new HashMap<LocalDate, List<Visit>>();
+        this.listVisits = new HashMap<>();
     }
 
     @Override
@@ -31,7 +31,7 @@ public class VisitServiceImpl implements VisitService {
         LocalDate dateOfVisit = visit.getDate();
         List<Visit> currentListOfVisits = listVisits.get(dateOfVisit);
         if (currentListOfVisits == null) {
-            currentListOfVisits = new ArrayList<Visit>();
+            currentListOfVisits = new ArrayList<>();
         }
         currentListOfVisits.add(visit);
         listVisits.put(dateOfVisit, currentListOfVisits);
@@ -126,6 +126,7 @@ public class VisitServiceImpl implements VisitService {
         }
     }
 
+    @Override
     public Map<LocalDate, List<Visit>> getListVisits() {
         //return listVisits;
         return cloneMap(listVisits);
@@ -139,7 +140,6 @@ public class VisitServiceImpl implements VisitService {
         }
         return destMap;
     }
-
     @Override
     public void setListVisits(Map<LocalDate, List<Visit>> listVisits) {
         this.listVisits = listVisits;

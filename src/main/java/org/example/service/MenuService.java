@@ -6,7 +6,7 @@ public class MenuService {
     public static void printMainMenu() {
         System.out.println();
         System.out.println("PRIVATE CLINIC");
-        System.out.print("Enter your login: ");
+        System.out.print("Enter your Login: ");
     }
 
     public static void printDoctorMenu() {

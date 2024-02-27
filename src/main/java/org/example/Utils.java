@@ -65,7 +65,10 @@ public class Utils {
             PrintWriter printWriter = new PrintWriter("visits.txt", StandardCharsets.UTF_8);
             for (Map.Entry<LocalDate, List<Visit>> entry : listVisits.entrySet()) {
                 for (Visit visit : entry.getValue()) {
-                    printWriter.println(entry.getKey() + ";" + visit.getId() + ";" + visit.getTime() + ";" + visit.getDoctor().getId());
+                    if (visit.getPatient() != null) {
+                        printWriter.println(entry.getKey() + ";" + visit.getId() + ";" + visit.getTime() + ";" + visit.getDoctor().getId() + ";" + visit.getPatient().getId());
+                    }
+                    printWriter.println(entry.getKey() + ";" + visit.getId() + ";" + visit.getTime() + ";" + visit.getDoctor().getId() + ";" + "-");
                 }
             }
             printWriter.close();
@@ -114,7 +117,8 @@ public class Utils {
                 int id = Integer.parseInt(strings[1].trim());
                 LocalTime time = LocalTime.parse(strings[2].trim());
                 String idDoctor = strings[3].trim();
-                Visit visit = new Visit(date, time, getDoctorFromId(idDoctor));
+                String idPatient = strings[4].trim();
+                Visit visit = new Visit(date, time, getDoctorFromId(idDoctor), getPatientFromId(idPatient));
                 visits.add(visit);
                 mapVisit.put(date, visits);
             }
@@ -127,6 +131,15 @@ public class Utils {
     private static User getDoctorFromId(String idDoctor) {
         for (User user : getUsersFromFile()) {
             if (user.getId().equals(Integer.parseInt(idDoctor)) && (user instanceof Doctor)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    private static User getPatientFromId(String idPatient) {
+        for (User user : getUsersFromFile()) {
+            if (!idPatient.equals("-") && user.getId().equals(Integer.parseInt(idPatient)) && (user instanceof Patient)) {
                 return user;
             }
         }
