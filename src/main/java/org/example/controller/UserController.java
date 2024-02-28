@@ -35,7 +35,17 @@ public class UserController {
         visitService.setListVisits(visitsFromFile);
         mainMenuOption(loginService);
     }
-
+    //    public void newUser(Scanner scanner){
+//        System.out.print("Input Name: ");
+//        String name = scanner.nextLine();
+//        System.out.print("Input Surname: ");
+//        String surname = scanner.nextLine();
+//        System.out.print("Input Login: ");
+//        System.out.print("Input Password: ");
+//        String password = scanner.nextLine();
+//        System.out.print("Input Number Telephone: ");
+//        String telephone = scanner.nextLine();
+//    }
     private void mainMenuOption(LoginService loginService) {
         User login = null;
         while (login == null) {
