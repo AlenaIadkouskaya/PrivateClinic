@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.example.model.*;
 
 import java.io.IOException;
@@ -15,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FileServiceImpl implements FileService{
+public class FileServiceImpl implements FileService {
     @Override
     public void writeToFileUsers(List<User> users) {
         try {
@@ -97,7 +98,7 @@ public class FileServiceImpl implements FileService{
                 LocalTime time = LocalTime.parse(strings[2].trim());
                 String idDoctor = strings[3].trim();
                 String idPatient = strings[4].trim();
-                Visit visit = new Visit(date, time, getDoctorFromId(idDoctor), idPatient.equals("-")?null:getPatientFromId(idPatient));
+                Visit visit = new Visit(date, time, getDoctorFromId(idDoctor), idPatient.equals("-") ? null : getPatientFromId(idPatient));
                 visits.add(visit);
                 mapVisit.put(date, visits);
             }

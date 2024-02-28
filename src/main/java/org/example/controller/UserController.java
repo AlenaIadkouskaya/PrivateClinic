@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.example.Utils;
 import org.example.model.Doctor;
 import org.example.model.Specialization;
@@ -40,10 +41,9 @@ public class UserController {
         while (login == null) {
             MenuService.printMainMenu();
             String inputLogin = scanner.nextLine();
-            System.out.print("Enter your Password: ");
+            System.out.print("Enter your password: ");
             String inputPassword = scanner.nextLine();
-//            fileService.getUsersFromFile();
-//            loginService.fakeUsers();
+            //inputPassword = DigestUtils.md5Hex(inputPassword);
 
             try {
                 login = loginService.login(inputLogin, inputPassword);
@@ -58,18 +58,6 @@ public class UserController {
         }
         scanner.close();
     }
-
-//    public void newUser(Scanner scanner){
-//        System.out.print("Input Name: ");
-//        String name = scanner.nextLine();
-//        System.out.print("Input Surname: ");
-//        String surname = scanner.nextLine();
-//        System.out.print("Input Login: ");
-//        System.out.print("Input Password: ");
-//        String password = scanner.nextLine();
-//        System.out.print("Input Number Telephone: ");
-//        String telephone = scanner.nextLine();
-//    }
 
     public void doctorMenuOptions(User doctor, LoginService loginService) {
         SearchService searchService = new SearchServiceImpl();

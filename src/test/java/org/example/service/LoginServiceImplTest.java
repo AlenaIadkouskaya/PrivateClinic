@@ -26,7 +26,7 @@ public class LoginServiceImplTest {
         User doctor = new Doctor(2, "Agnieszka", "Pierwsza", "doctor1", "222", Specialization.INTERN);
         users.add(patient);
         users.add(doctor);
-        loginService.setUsers(users);
+        //loginService.setUsers(users);
 
         // when
         User login = loginService.login("doctor1", "222");
