@@ -22,14 +22,14 @@ public class LoginServiceImplTest {
         //given
         LoginServiceImpl loginService = new LoginServiceImpl();
         List<User> users = new ArrayList<>();
-        User patient = new Patient(1, "Patient", "Patient", "patient1", "111", "322-322-322");
-        User doctor = new Doctor(2, "Doctor", "Doctor", "doctor1", "111", Specialization.CARDIOLOGIST);
+        User patient = new Patient(1, "Mateusz", "Chory", "patient1", "111", "322-322-322");
+        User doctor = new Doctor(2, "Agnieszka", "Pierwsza", "doctor1", "222", Specialization.INTERN);
         users.add(patient);
         users.add(doctor);
-        loginService.fakeUsers();
+        loginService.setUsers(users);
 
         // when
-        User login = loginService.login("doctor1", "111");
+        User login = loginService.login("doctor1", "222");
 
         // then
         assertThat(login).isNotNull();

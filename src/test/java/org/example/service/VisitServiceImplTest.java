@@ -2,7 +2,6 @@ package org.example.service;
 
 import junit.framework.TestCase;
 import org.example.Utils;
-import org.example.exception.ExceptionLackOfVisit;
 import org.example.model.Doctor;
 import org.example.model.Patient;
 import org.example.model.Specialization;
@@ -10,6 +9,7 @@ import org.example.model.Visit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.lang.module.FindException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -39,7 +39,7 @@ public class VisitServiceImplTest extends TestCase {
         try {
             //when
             visitService.addVisit(newVisit);
-        } catch (ExceptionLackOfVisit e) {
+        } catch (FindException e) {
             //then
             assertThat(e.getMessage()).isNotEqualTo("");
         }
@@ -57,7 +57,7 @@ public class VisitServiceImplTest extends TestCase {
         try {
             //when
             visitService.addVisit(secondVisit);
-        } catch (ExceptionLackOfVisit e) {
+        } catch (FindException e) {
             //then
             assertThat(e.getMessage()).isNotEqualTo("");
         }
@@ -139,7 +139,7 @@ public class VisitServiceImplTest extends TestCase {
         try {
             //when
             visitService.deleteVisit(2);
-        } catch (ExceptionLackOfVisit e) {
+        } catch (FindException e) {
             //then
             assertThat(e.getMessage()).isNotEqualTo("");
         }
@@ -176,7 +176,7 @@ public class VisitServiceImplTest extends TestCase {
         try {
             visitService.canselVisit(1);
             visitService.showVisit();
-        } catch (ExceptionLackOfVisit e) {
+        } catch (FindException e) {
             //then
             assertThat(e.getMessage()).isEqualTo("This visit is not exist or there is not patient record for this time!");
         }
@@ -211,7 +211,7 @@ public class VisitServiceImplTest extends TestCase {
         try {
             //when
             visitService.makeAppointment(Visit.countVisits - 1, secondPatient);
-        } catch (ExceptionLackOfVisit e) {
+        } catch (FindException e) {
             //then
             assertThat(e.getMessage()).isNotEqualTo("");
         }
@@ -229,7 +229,7 @@ public class VisitServiceImplTest extends TestCase {
         //when
         try {
             visitService.canselVisit(Visit.countVisits - 1);
-        } catch (ExceptionLackOfVisit e) {
+        } catch (FindException e) {
             //then
             assertThat(e.getMessage()).isNotEqualTo("");
         }
