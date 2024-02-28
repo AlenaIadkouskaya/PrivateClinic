@@ -1,10 +1,8 @@
 package org.example.service;
 
 import org.example.Utils;
-import org.example.model.Patient;
 import org.example.model.User;
 import org.example.model.Visit;
-
 import java.lang.module.FindException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -129,7 +127,6 @@ public class VisitServiceImpl implements VisitService {
 
     @Override
     public Map<LocalDate, List<Visit>> getListVisits() {
-        //return listVisits;
         return cloneMap(listVisits);
     }
 

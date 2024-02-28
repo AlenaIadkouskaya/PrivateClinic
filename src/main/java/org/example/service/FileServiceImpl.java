@@ -1,8 +1,6 @@
 package org.example.service;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.example.model.*;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.module.FindException;
