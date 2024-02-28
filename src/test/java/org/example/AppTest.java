@@ -33,7 +33,7 @@ public class AppTest extends TestCase {
         loginService.setUsers(listOfUsers);
 
         String login = "doctor1";
-        String password = "111";
+        String password = "222";
         User currentUser = loginService.login(login, password);
 
         Visit newVisitAt9 = new Visit(LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
@@ -43,7 +43,7 @@ public class AppTest extends TestCase {
         visitService.addVisit(newVisitAt9);
         visitService.addVisit(newVisitAt10);
 
-        currentUser = loginService.login("patient1","222");
+        currentUser = loginService.login("patient1","111");
 
         visitService.makeAppointment(1, currentUser);
         //when
@@ -69,7 +69,7 @@ public class AppTest extends TestCase {
         loginService.setUsers(listOfUsers);
 
         String login = "doctor1";
-        String password = "111";
+        String password = "222";
         User currentUser = loginService.login(login, password);
 
         Visit newVisitAt9 = new Visit(LocalDate.of(2024, 3, 1), LocalTime.of(9, 0),
@@ -79,7 +79,7 @@ public class AppTest extends TestCase {
         visitService.addVisit(newVisitAt9);
         visitService.addVisit(newVisitAt10);
 
-        currentUser = loginService.login("patient1","222");
+        currentUser = loginService.login("patient1","111");
 
         visitService.makeAppointment(1, currentUser);
         List<Visit> currentRecords = new ArrayList<>();
