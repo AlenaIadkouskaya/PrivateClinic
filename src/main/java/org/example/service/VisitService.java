@@ -1,9 +1,7 @@
 package org.example.service;
 
-import org.example.model.Patient;
 import org.example.model.User;
 import org.example.model.Visit;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;

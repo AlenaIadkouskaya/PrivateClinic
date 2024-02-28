@@ -1,18 +1,12 @@
 package org.example.service;
 
-import static org.assertj.core.api.Assertions.*;
-
 import org.example.model.Doctor;
 import org.example.model.Patient;
 import org.example.model.Specialization;
 import org.example.model.User;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class LoginServiceImplTest {
@@ -26,7 +20,7 @@ public class LoginServiceImplTest {
         User doctor = new Doctor(2, "Agnieszka", "Pierwsza", "doctor1", "222", Specialization.INTERN);
         users.add(patient);
         users.add(doctor);
-        //loginService.setUsers(users);
+        loginService.setUsers(users);
 
         // when
         User login = loginService.login("doctor1", "222");

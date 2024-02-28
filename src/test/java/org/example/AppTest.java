@@ -1,14 +1,10 @@
 package org.example;
 
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.example.model.Doctor;
-import org.example.model.Specialization;
 import org.example.model.User;
 import org.example.model.Visit;
 import org.example.service.*;
 import org.junit.jupiter.api.Test;
-
 import java.lang.module.FindException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -95,6 +91,5 @@ public class AppTest extends TestCase {
             assertThat(currentRecords.get(0).getPatient()).isNotNull();
             assertThat(e.getMessage()).isNotEqualTo("");
         }
-
     }
 }

@@ -1,9 +1,7 @@
 package org.example.controller;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.example.Utils;
 import org.example.model.Doctor;
-import org.example.model.Specialization;
 import org.example.model.User;
 import org.example.model.Visit;
 import org.example.service.*;
@@ -28,7 +26,6 @@ public class UserController {
     }
 
     public void run() {
-//        loginService.fakeUsers();
         List<User> listOfUsers = fileService.getUsersFromFile();
         loginService.setUsers(listOfUsers);
         Map<LocalDate, List<Visit>> visitsFromFile = fileService.getVisitsFromFile();
@@ -43,7 +40,6 @@ public class UserController {
             String inputLogin = scanner.nextLine();
             System.out.print("Enter your password: ");
             String inputPassword = scanner.nextLine();
-            //inputPassword = DigestUtils.md5Hex(inputPassword);
 
             try {
                 login = loginService.login(inputLogin, inputPassword);
@@ -63,7 +59,7 @@ public class UserController {
         SearchService searchService = new SearchServiceImpl();
         while (true) {
             try {
-                MenuService.printDoctorMenu();
+                MenuService.printDoctorMenu(doctor);
                 String userOption = scanner.nextLine().toLowerCase();
                 switch (userOption) {
                     case "1":
@@ -116,7 +112,7 @@ public class UserController {
         SearchService searchService = new SearchServiceImpl();
         while (true) {
             try {
-                MenuService.printPatientMenu();
+                MenuService.printPatientMenu(patient);
                 String userOption = scanner.nextLine().toLowerCase();
                 switch (userOption) {
                     case "1":

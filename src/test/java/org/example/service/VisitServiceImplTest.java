@@ -6,14 +6,11 @@ import org.example.model.Doctor;
 import org.example.model.Patient;
 import org.example.model.Specialization;
 import org.example.model.Visit;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
 import java.lang.module.FindException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class VisitServiceImplTest extends TestCase {
