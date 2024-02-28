@@ -1,11 +1,11 @@
 package org.example.service;
 
 import org.example.Utils;
-import org.example.exception.ExceptionLackOfVisit;
 import org.example.model.Patient;
 import org.example.model.User;
 import org.example.model.Visit;
 
+import java.lang.module.FindException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +26,7 @@ public class VisitServiceImpl implements VisitService {
         }
         boolean thisVisitExist = checkAllVisits(visit);
         if (thisVisitExist) {
-            throw new ExceptionLackOfVisit("You can't add visit with specified parameters!");
+            throw new FindException("You can't add visit with specified parameters!");
         }
         LocalDate dateOfVisit = visit.getDate();
         List<Visit> currentListOfVisits = listVisits.get(dateOfVisit);
@@ -37,7 +37,8 @@ public class VisitServiceImpl implements VisitService {
         listVisits.put(dateOfVisit, currentListOfVisits);
     }
 
-    private boolean checkAllVisits(Visit visit) {
+    @Override
+    public boolean checkAllVisits(Visit visit) {
         for (Map.Entry<LocalDate, List<Visit>> entry : listVisits.entrySet()) {
             List<Visit> nextList = entry.getValue();
             for (int i = 0; i < nextList.size(); i++) {
@@ -68,7 +69,7 @@ public class VisitServiceImpl implements VisitService {
             }
         }
         if (!operationExecuted) {
-            throw new ExceptionLackOfVisit("This visit is not exist or the visit needs to be cancelled!");
+            throw new FindException("This visit is not exist or the visit needs to be cancelled!");
         }
     }
 
@@ -90,7 +91,7 @@ public class VisitServiceImpl implements VisitService {
             }
         }
         if (!operationExecuted) {
-            throw new ExceptionLackOfVisit("This visit is not exist or there is not patient record for this time!");
+            throw new FindException("This visit is not exist or there is not patient record for this time!");
         }
     }
 
@@ -122,7 +123,7 @@ public class VisitServiceImpl implements VisitService {
             }
         }
         if (!operationExecuted) {
-            throw new ExceptionLackOfVisit("This visit is not exist or there is other patient record for this time!");
+            throw new FindException("This visit is not exist or there is other patient record for this time!");
         }
     }
 
@@ -140,6 +141,7 @@ public class VisitServiceImpl implements VisitService {
         }
         return destMap;
     }
+
     @Override
     public void setListVisits(Map<LocalDate, List<Visit>> listVisits) {
         this.listVisits = listVisits;

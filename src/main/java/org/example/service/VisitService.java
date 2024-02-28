@@ -11,6 +11,7 @@ import java.util.Map;
 public interface VisitService {
 
     void addVisit(Visit visit);
+    boolean checkAllVisits(Visit visit);
 
     void deleteVisit(Integer id);
 
