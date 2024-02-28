@@ -6,10 +6,10 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class Visit {
-    private Integer id;
-    private LocalDate date;
-    private LocalTime time;
-    private User doctor;
+    private final Integer id;
+    private final LocalDate date;
+    private final LocalTime time;
+    private final User doctor;
     private User patient;
     public static Integer countVisits = 1;
 

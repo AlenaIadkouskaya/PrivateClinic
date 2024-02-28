@@ -1,7 +1,7 @@
 package org.example.model;
 
 public class Patient extends User {
-    private String numberTelephone;
+    private final String numberTelephone;
 
     public Patient(Integer id, String name, String surname, String login, String password, String numberTelephone) {
         super(id, name, surname, login, password);

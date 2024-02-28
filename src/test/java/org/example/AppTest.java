@@ -2,16 +2,14 @@ package org.example;
 
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.example.exception.ExceptionLackOfVisit;
 import org.example.model.Doctor;
 import org.example.model.Specialization;
 import org.example.model.User;
 import org.example.model.Visit;
-import org.example.service.LoginService;
-import org.example.service.LoginServiceImpl;
-import org.example.service.VisitServiceImpl;
+import org.example.service.*;
 import org.junit.jupiter.api.Test;
 
+import java.lang.module.FindException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -26,7 +24,8 @@ public class AppTest extends TestCase {
     @Test
     public void creating_makingAppointment_test() {
         //given
-        List<User> listOfUsers = Utils.getUsersFromFile();
+        FileService fileService = new FileServiceImpl();
+        List<User> listOfUsers = fileService.getUsersFromFile();
 
         LoginService loginService = new LoginServiceImpl();
         VisitServiceImpl visitService = new VisitServiceImpl();
@@ -59,7 +58,8 @@ public class AppTest extends TestCase {
     @Test
     public void deleting_appointment() {
         //given
-        List<User> listOfUsers = Utils.getUsersFromFile();
+        FileService fileService = new FileServiceImpl();
+        List<User> listOfUsers = fileService.getUsersFromFile();
 
         LoginService loginService = new LoginServiceImpl();
         VisitServiceImpl visitService = new VisitServiceImpl();
@@ -88,7 +88,7 @@ public class AppTest extends TestCase {
             visitService.deleteVisit(2);
             visitService.deleteVisit(1);
         }
-        catch (ExceptionLackOfVisit e){
+        catch (FindException e){
             //then
             currentRecords = visitService.showVisit();
             assertThat(currentRecords.size()).isEqualTo(1);

@@ -1,13 +1,13 @@
 package org.example.controller;
 
 import org.example.Utils;
-import org.example.exception.ExceptionLackOfVisit;
 import org.example.model.Doctor;
 import org.example.model.Specialization;
 import org.example.model.User;
 import org.example.model.Visit;
 import org.example.service.*;
 
+import java.lang.module.FindException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -18,16 +18,19 @@ public class UserController {
     private static final Scanner scanner = new Scanner(System.in);
     private final LoginService loginService;
     private final VisitService visitService;
+    private final FileService fileService;
 
-    public UserController(LoginService loginService, VisitServiceImpl visitService) {
+    public UserController(LoginService loginService, VisitService visitService, FileService fileService) {
         this.loginService = loginService;
         this.visitService = visitService;
+        this.fileService = fileService;
     }
 
     public void run() {
-        List<User> listOfUsers = Utils.getUsersFromFile();
+//        loginService.fakeUsers();
+        List<User> listOfUsers = fileService.getUsersFromFile();
         loginService.setUsers(listOfUsers);
-        Map<LocalDate, List<Visit>> visitsFromFile = Utils.getVisitsFromFile();
+        Map<LocalDate, List<Visit>> visitsFromFile = fileService.getVisitsFromFile();
         visitService.setListVisits(visitsFromFile);
         mainMenuOption(loginService);
     }
@@ -39,8 +42,8 @@ public class UserController {
             String inputLogin = scanner.nextLine();
             System.out.print("Enter your Password: ");
             String inputPassword = scanner.nextLine();
-            //Utils.getUsersFromFile();
-            //loginService.fakeUsers();
+//            fileService.getUsersFromFile();
+//            loginService.fakeUsers();
 
             try {
                 login = loginService.login(inputLogin, inputPassword);
@@ -49,13 +52,24 @@ public class UserController {
                 } else {
                     patientMenuOptions(login, loginService);
                 }
-            } catch (ExceptionLackOfVisit e) {
+            } catch (FindException e) {
                 System.out.println(e.getMessage());
             }
         }
-
         scanner.close();
     }
+
+//    public void newUser(Scanner scanner){
+//        System.out.print("Input Name: ");
+//        String name = scanner.nextLine();
+//        System.out.print("Input Surname: ");
+//        String surname = scanner.nextLine();
+//        System.out.print("Input Login: ");
+//        System.out.print("Input Password: ");
+//        String password = scanner.nextLine();
+//        System.out.print("Input Number Telephone: ");
+//        String telephone = scanner.nextLine();
+//    }
 
     public void doctorMenuOptions(User doctor, LoginService loginService) {
         SearchService searchService = new SearchServiceImpl();
@@ -68,8 +82,6 @@ public class UserController {
                         visitService.showVisit();
                         break;
                     case "2":
-                        //LocalDate dateForAdd = getLocalDateFromConsole(scanner);
-                        //LocalTime timeForAdd = getLocalTimeFromConsole(scanner);
                         visitService.addVisit(new Visit(getLocalDateFromConsole(scanner), getLocalTimeFromConsole(scanner), doctor));
                         visitService.showVisit();
                         break;
@@ -90,7 +102,6 @@ public class UserController {
                         visitService.showVisit();
                         break;
                     case "5":
-                        //LocalDate dateForSearch = getLocalDateFromConsole(scanner);
                         List<Visit> visits = searchService.searchVisit(getLocalDateFromConsole(scanner), visitService.getListVisits());
                         Utils.showToConsole(visits);
                         break;
@@ -98,14 +109,55 @@ public class UserController {
                         mainMenuOption(loginService);
                         break;
                     case "7":
-                        Utils.writeToFileUsers(loginService.getUsers());
-                        Utils.writeToFileVisits(visitService.getListVisits());
+                        fileService.writeToFileUsers(loginService.getUsers());
+                        fileService.writeToFileVisits(visitService.getListVisits());
                         System.exit(0);
                         break;
                     default:
                         throw new RuntimeException("Invalid option. Please choose a valid option.");
                 }
-            } catch (ExceptionLackOfVisit e) {
+            } catch (FindException e) {
+                System.out.println(e.getMessage());
+            } catch (RuntimeException e) {
+                System.out.println("Input correct number menu");
+            }
+        }
+    }
+
+    public void patientMenuOptions(User patient, LoginService loginService) {
+        SearchService searchService = new SearchServiceImpl();
+        while (true) {
+            try {
+                MenuService.printPatientMenu();
+                String userOption = scanner.nextLine().toLowerCase();
+                switch (userOption) {
+                    case "1":
+                        visitService.showVisit();
+                        break;
+                    case "2":
+                        visitService.showVisit();
+                        System.out.print("Input id: ");
+                        Integer id = scanner.nextInt();
+                        scanner.nextLine();
+                        visitService.makeAppointment(id, patient);
+                        visitService.showVisit();
+                        break;
+                    case "3":
+                        List<Visit> visits = searchService.searchVisit(getLocalDateFromConsole(scanner), visitService.getListVisits());
+                        Utils.showToConsole(visits);
+                        break;
+                    case "4":
+                        mainMenuOption(loginService);
+                        break;
+                    case "5":
+                        fileService.writeToFileUsers(loginService.getUsers());
+                        fileService.writeToFileVisits(visitService.getListVisits());
+                        System.exit(0);
+                        break;
+                    default:
+                        throw new RuntimeException("Invalid option. Please choose a valid option.");
+                }
+            } catch (FindException e) {
                 System.out.println(e.getMessage());
             } catch (RuntimeException e) {
                 System.out.println("Input correct number menu");
@@ -132,47 +184,5 @@ public class UserController {
         LocalDate receiveDate = LocalDate.of(year, month, day);
         scanner.nextLine();
         return receiveDate;
-    }
-
-    public void patientMenuOptions(User patient, LoginService loginService) {
-        SearchService searchService = new SearchServiceImpl();
-        while (true) {
-            try {
-                MenuService.printPatientMenu();
-                String userOption = scanner.nextLine().toLowerCase();
-                switch (userOption) {
-                    case "1":
-                        visitService.showVisit();
-                        break;
-                    case "2":
-                        visitService.showVisit();
-                        System.out.print("Input id: ");
-                        Integer id = scanner.nextInt();
-                        scanner.nextLine();
-                        visitService.makeAppointment(id, patient);
-                        visitService.showVisit();
-                        break;
-                    case "3":
-                        //LocalDate dateForSearch = getLocalDateFromConsole(scanner);
-                        List<Visit> visits = searchService.searchVisit(getLocalDateFromConsole(scanner), visitService.getListVisits());
-                        Utils.showToConsole(visits);
-                        break;
-                    case "4":
-                        mainMenuOption(loginService);
-                        break;
-                    case "5":
-                        Utils.writeToFileUsers(loginService.getUsers());
-                        Utils.writeToFileVisits(visitService.getListVisits());
-                        System.exit(0);
-                        break;
-                    default:
-                        throw new RuntimeException("Invalid option. Please choose a valid option.");
-                }
-            } catch (ExceptionLackOfVisit e) {
-                System.out.println(e.getMessage());
-            } catch (RuntimeException e) {
-                System.out.println("Input correct number menu");
-            }
-        }
     }
 }
