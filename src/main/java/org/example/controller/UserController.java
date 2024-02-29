@@ -14,24 +14,28 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class UserController {
-    private static final Scanner scanner = new Scanner(System.in);
+    private Scanner scanner;
     private final LoginService loginService;
     private final VisitService visitService;
     private final FileService fileService;
 
-    public UserController(LoginService loginService, VisitService visitService, FileService fileService) {
+    public UserController(LoginService loginService, VisitService visitService, FileService fileService, Scanner scanner) {
         this.loginService = loginService;
         this.visitService = visitService;
         this.fileService = fileService;
+        this.scanner = scanner;
     }
 
     public void run() {
+        scanner = new Scanner(System.in);
         List<User> listOfUsers = fileService.getUsersFromFile();
         loginService.setUsers(listOfUsers);
         Map<LocalDate, List<Visit>> visitsFromFile = fileService.getVisitsFromFile();
         visitService.setListVisits(visitsFromFile);
         mainMenuOption(loginService);
+        scanner.close();
     }
+
     //    public void newUser(Scanner scanner){
 //        System.out.print("Input Name: ");
 //        String name = scanner.nextLine();
@@ -43,6 +47,7 @@ public class UserController {
 //        System.out.print("Input Number Telephone: ");
 //        String telephone = scanner.nextLine();
 //    }
+
     private void mainMenuOption(LoginService loginService) {
         User login = null;
         while (login == null) {
@@ -50,7 +55,6 @@ public class UserController {
             String inputLogin = scanner.nextLine();
             System.out.print("Enter your password: ");
             String inputPassword = scanner.nextLine();
-
             try {
                 login = loginService.login(inputLogin, inputPassword);
                 if (login instanceof Doctor) {
@@ -62,10 +66,9 @@ public class UserController {
                 System.out.println(e.getMessage());
             }
         }
-        scanner.close();
     }
 
-    public void doctorMenuOptions(User doctor, LoginService loginService) {
+    private void doctorMenuOptions(User doctor, LoginService loginService) {
         SearchService searchService = new SearchServiceImpl();
         while (true) {
             try {
@@ -118,7 +121,7 @@ public class UserController {
         }
     }
 
-    public void patientMenuOptions(User patient, LoginService loginService) {
+    private void patientMenuOptions(User patient, LoginService loginService) {
         SearchService searchService = new SearchServiceImpl();
         while (true) {
             try {

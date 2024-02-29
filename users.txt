@@ -4,3 +4,4 @@
 4;Piotr;Slipy;doctor3;222;OCULIST;-
 5;Dorota;Pryszcz;doctor4;222;DERMATOLOGIST;-
 6;Marta;Kwiatek;doctor5;222;ALLERGIST;-
+7;Mateusz2;Chory2;patient2;112;-;322-322-322
