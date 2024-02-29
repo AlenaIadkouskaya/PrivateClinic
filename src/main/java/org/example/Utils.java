@@ -4,9 +4,6 @@ import org.example.model.*;
 import java.util.List;
 
 public class Utils {
-    private Utils() {
-    }
-
     public static void showToConsole(List<Visit> listToShow) {
         System.out.println();
         System.out.println("LIST OF VISITS\n");

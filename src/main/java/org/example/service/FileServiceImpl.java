@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.model.*;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.module.FindException;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class FileServiceImpl implements FileService {
     @Override
@@ -61,7 +63,7 @@ public class FileServiceImpl implements FileService {
             List<String> lines = Files.readAllLines(filePathUsers);
             for (String line : lines) {
                 String[] strings = line.split(";");
-                int id = Integer.parseInt(strings[0].trim());
+                UUID id = UUID.fromString(strings[0].trim());
                 String name = strings[1].trim();
                 String surname = strings[2].trim();
                 String login = strings[3].trim();
@@ -95,12 +97,20 @@ public class FileServiceImpl implements FileService {
                 LocalDate date = LocalDate.parse(strings[0].trim());
                 int id = Integer.parseInt(strings[1].trim());
                 LocalTime time = LocalTime.parse(strings[2].trim());
-                String idDoctor = strings[3].trim();
+                UUID idDoctor = UUID.fromString(strings[3].trim());
                 String idPatient = strings[4].trim();
-                Visit visit = new Visit(date, time, getDoctorFromId(idDoctor), idPatient.equals("-") ? null : getPatientFromId(idPatient));
-                visits.add(visit);
-                //mapVisit.put(date, visits);
-                VisitServiceImpl.pasteToListVisits(visit, mapVisit);
+                if (idPatient.equals("-")) {
+                    Visit visit = new Visit(date, time, getDoctorFromId(idDoctor), null);
+                    visits.add(visit);
+                    VisitServiceImpl.pasteToListVisits(visit, mapVisit);
+                } else {
+                    UUID idPatient2 = UUID.fromString(idPatient);
+                    Visit visit = new Visit(date, time, getDoctorFromId(idDoctor), getPatientFromId(idPatient2));
+//                Visit visit = new Visit(date, time, getDoctorFromId(idDoctor), idPatient2.equals("-") ? null : getPatientFromId(idPatient));
+                    visits.add(visit);
+                    VisitServiceImpl.pasteToListVisits(visit, mapVisit);
+                }
+
             }
             Visit.countVisits = visits.size() + 1;
         } catch (IOException e) {
@@ -109,18 +119,18 @@ public class FileServiceImpl implements FileService {
         return mapVisit;
     }
 
-    public User getDoctorFromId(String idDoctor) {
+    public User getDoctorFromId(UUID idDoctor) {
         for (User user : getUsersFromFile()) {
-            if (user.getId().equals(Integer.parseInt(idDoctor)) && (user instanceof Doctor)) {
+            if (user.getId().equals(idDoctor) && (user instanceof Doctor)) {
                 return user;
             }
         }
         throw new FindException("Object not found");
     }
 
-    private User getPatientFromId(String idPatient) {
+    private User getPatientFromId(UUID idPatient) {
         for (User user : getUsersFromFile()) {
-            if (!idPatient.equals("-") && user.getId().equals(Integer.parseInt(idPatient)) && (user instanceof Patient)) {
+            if (!idPatient.equals("-") && user.getId().equals(idPatient) && (user instanceof Patient)) {
                 return user;
             }
         }

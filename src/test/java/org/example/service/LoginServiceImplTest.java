@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -21,22 +22,22 @@ public class LoginServiceImplTest {
     public void is_login_true() {
         //given
         List<User> users = new ArrayList<>();
-        User patient = new Patient(1, "Mateusz", "Chory", "patient1", "111", "322-322-322");
-        User doctor = new Doctor(2, "Agnieszka", "Pierwsza", "doctor1", "222", Specialization.INTERN);
+        UUID idPatient = UUID.randomUUID();
+        UUID idDoctor = UUID.randomUUID();
+        User patient = new Patient(idPatient, "Mateusz", "Chory", "patient1", "111", "322-322-322");
+        User doctor = new Doctor(idDoctor, "Agnieszka", "Pierwsza", "doctor1", "222", Specialization.INTERN);
         users.add(patient);
         users.add(doctor);
         LoginService loginService = Mockito.mock(LoginServiceImpl.class);
         Scanner mockedScanner = Mockito.mock(Scanner.class);
         FileService mockedFileService = Mockito.mock(FileServiceImpl.class);
         VisitService visitService = new VisitServiceImpl();
+        SearchService searchService = new SearchServiceImpl();
         Mockito.when(mockedFileService.getUsersFromFile()).thenReturn(users);
         Mockito.when(mockedScanner.nextLine()).thenReturn("patient1");
 
-
-
         // when
-        UserController userController = new UserController(loginService, visitService, mockedFileService, mockedScanner);
-
+        UserController userController = new UserController(loginService, visitService, mockedFileService, mockedScanner, searchService);
 //        User login = loginService.login("doctor1", "222");
 
         // then

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface VisitService {
-
     void addVisit(Visit visit);
     boolean checkAllVisits(Visit visit);
 
@@ -20,5 +19,6 @@ public interface VisitService {
     void makeAppointment(Integer id, User patient);
 
     void setListVisits(Map<LocalDate, List<Visit>> listVisits);
+
     Map<LocalDate, List<Visit>> getListVisits();
 }
