@@ -26,6 +26,16 @@ public class VisitServiceImpl implements VisitService {
         if (thisVisitExist) {
             throw new FindException("You can't add visit with specified parameters!");
         }
+        pasteToListVisits(visit, listVisits);
+//        LocalDate dateOfVisit = visit.getDate();
+//        List<Visit> currentListOfVisits = listVisits.get(dateOfVisit);
+//        if (currentListOfVisits == null) {
+//            currentListOfVisits = new ArrayList<>();
+//        }
+//        currentListOfVisits.add(visit);
+//        listVisits.put(dateOfVisit, currentListOfVisits);
+    }
+    static void pasteToListVisits(Visit visit, Map<LocalDate, List<Visit>> listVisits) {
         LocalDate dateOfVisit = visit.getDate();
         List<Visit> currentListOfVisits = listVisits.get(dateOfVisit);
         if (currentListOfVisits == null) {
@@ -142,6 +152,6 @@ public class VisitServiceImpl implements VisitService {
     @Override
     public void setListVisits(Map<LocalDate, List<Visit>> listVisits) {
         this.listVisits = listVisits;
-        Visit.countVisits = listVisits.size() + 1;
+        //Visit.countVisits = listVisits.size() + 1;
     }
 }

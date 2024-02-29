@@ -89,6 +89,7 @@ public class FileServiceImpl implements FileService {
         List<Visit> visits = new ArrayList<>();
         try {
             List<String> lines = Files.readAllLines(filePathVisits);
+
             for (String line : lines) {
                 String[] strings = line.split(";");
                 LocalDate date = LocalDate.parse(strings[0].trim());
@@ -98,8 +99,10 @@ public class FileServiceImpl implements FileService {
                 String idPatient = strings[4].trim();
                 Visit visit = new Visit(date, time, getDoctorFromId(idDoctor), idPatient.equals("-") ? null : getPatientFromId(idPatient));
                 visits.add(visit);
-                mapVisit.put(date, visits);
+                //mapVisit.put(date, visits);
+                VisitServiceImpl.pasteToListVisits(visit, mapVisit);
             }
+            Visit.countVisits = visits.size() + 1;
         } catch (IOException e) {
             System.out.println("Error. Cannot read file");
         }
