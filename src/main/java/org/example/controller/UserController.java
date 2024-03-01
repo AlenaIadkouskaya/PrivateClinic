@@ -2,6 +2,7 @@ package org.example.controller;
 
 import org.example.Utils;
 import org.example.model.Doctor;
+import org.example.model.Patient;
 import org.example.model.User;
 import org.example.model.Visit;
 import org.example.service.*;
@@ -12,18 +13,21 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.UUID;
 
 public class UserController {
     private Scanner scanner;
     private final LoginService loginService;
     private final VisitService visitService;
     private final FileService fileService;
+    private final SearchService searchService;
 
-    public UserController(LoginService loginService, VisitService visitService, FileService fileService, Scanner scanner) {
+    public UserController(LoginService loginService, VisitService visitService, FileService fileService, Scanner scanner, SearchService searchService) {
         this.loginService = loginService;
         this.visitService = visitService;
         this.fileService = fileService;
         this.scanner = scanner;
+        this.searchService = searchService;
     }
 
     public void run() {
@@ -36,40 +40,50 @@ public class UserController {
         scanner.close();
     }
 
-    //    public void newUser(Scanner scanner){
-//        System.out.print("Input Name: ");
-//        String name = scanner.nextLine();
-//        System.out.print("Input Surname: ");
-//        String surname = scanner.nextLine();
-//        System.out.print("Input Login: ");
-//        System.out.print("Input Password: ");
-//        String password = scanner.nextLine();
-//        System.out.print("Input Number Telephone: ");
-//        String telephone = scanner.nextLine();
-//    }
-
     private void mainMenuOption(LoginService loginService) {
-        User login = null;
-        while (login == null) {
-            MenuService.printMainMenu();
-            String inputLogin = scanner.nextLine();
-            System.out.print("Enter your password: ");
-            String inputPassword = scanner.nextLine();
+        while (true) {
             try {
-                login = loginService.login(inputLogin, inputPassword);
-                if (login instanceof Doctor) {
-                    doctorMenuOptions(login, loginService);
-                } else {
-                    patientMenuOptions(login, loginService);
+                MenuService.printMainMenu();
+                String userOption = scanner.nextLine().toLowerCase();
+                switch (userOption) {
+                    case "1":
+                        User login = null;
+                        while (login == null) {
+                            System.out.println();
+                            System.out.print("Enter your Login: ");
+                            String inputLogin = scanner.nextLine();
+                            System.out.print("Enter your Password: ");
+                            String inputPassword = scanner.nextLine();
+                            try {
+                                login = loginService.login(inputLogin, inputPassword);
+                                if (login instanceof Doctor) {
+                                    doctorMenuOptions(login, loginService);
+                                } else {
+                                    patientMenuOptions(login, loginService);
+                                }
+                            } catch (FindException e) {
+                                System.out.println(e.getMessage());
+                            }
+                        }
+                        break;
+                    case "2":
+                        getNewPatientData(scanner, loginService);
+                        break;
+                    case "3":
+                        System.exit(0);
+                        break;
+                    default:
+                        throw new RuntimeException("Invalid option. Please choose a valid option.");
                 }
             } catch (FindException e) {
                 System.out.println(e.getMessage());
+            } catch (RuntimeException e) {
+                System.out.println("Input correct number menu");
             }
         }
     }
 
     private void doctorMenuOptions(User doctor, LoginService loginService) {
-        SearchService searchService = new SearchServiceImpl();
         while (true) {
             try {
                 MenuService.printDoctorMenu(doctor);
@@ -85,16 +99,14 @@ public class UserController {
                     case "3":
                         visitService.showVisit();
                         System.out.print("Inpui id: ");
-                        Integer id = scanner.nextInt();
-                        scanner.nextLine();
+                        Integer id = Integer.parseInt(scanner.nextLine());
                         visitService.deleteVisit(id);
                         visitService.showVisit();
                         break;
                     case "4":
                         visitService.showVisit();
                         System.out.print("Input id: ");
-                        Integer id2 = scanner.nextInt();
-                        scanner.nextLine();
+                        Integer id2 = Integer.parseInt(scanner.nextLine());
                         visitService.canselVisit(id2);
                         visitService.showVisit();
                         break;
@@ -122,7 +134,6 @@ public class UserController {
     }
 
     private void patientMenuOptions(User patient, LoginService loginService) {
-        SearchService searchService = new SearchServiceImpl();
         while (true) {
             try {
                 MenuService.printPatientMenu(patient);
@@ -134,8 +145,7 @@ public class UserController {
                     case "2":
                         visitService.showVisit();
                         System.out.print("Input id: ");
-                        Integer id = scanner.nextInt();
-                        scanner.nextLine();
+                        Integer id = Integer.parseInt(scanner.nextLine());
                         visitService.makeAppointment(id, patient);
                         visitService.showVisit();
                         break;
@@ -162,7 +172,22 @@ public class UserController {
         }
     }
 
-    private LocalTime getLocalTimeFromConsole(Scanner scanner) {
+    private void getNewPatientData(Scanner scanner, LoginService loginService) {
+        System.out.print("Input Name: ");
+        String name = scanner.nextLine();
+        System.out.print("Input Surname: ");
+        String surname = scanner.nextLine();
+        System.out.print("Input Login: ");
+        String login = scanner.nextLine();
+        System.out.print("Input Password: ");
+        String password = scanner.nextLine();
+        System.out.print("Input Telephone Number: ");
+        String telephone = scanner.nextLine();
+        Patient patient = new Patient(UUID.randomUUID(), name, surname, login, password, telephone);
+        loginService.getUsers().add(patient);
+    }
+
+    private static LocalTime getLocalTimeFromConsole(Scanner scanner) {
         System.out.print("Input hour: ");
         int hour = scanner.nextInt();
         System.out.print("Input minute: ");

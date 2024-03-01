@@ -3,6 +3,7 @@ package org.example.service;
 import org.example.Utils;
 import org.example.model.User;
 import org.example.model.Visit;
+
 import java.lang.module.FindException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,14 +28,8 @@ public class VisitServiceImpl implements VisitService {
             throw new FindException("You can't add visit with specified parameters!");
         }
         pasteToListVisits(visit, listVisits);
-//        LocalDate dateOfVisit = visit.getDate();
-//        List<Visit> currentListOfVisits = listVisits.get(dateOfVisit);
-//        if (currentListOfVisits == null) {
-//            currentListOfVisits = new ArrayList<>();
-//        }
-//        currentListOfVisits.add(visit);
-//        listVisits.put(dateOfVisit, currentListOfVisits);
     }
+
     static void pasteToListVisits(Visit visit, Map<LocalDate, List<Visit>> listVisits) {
         LocalDate dateOfVisit = visit.getDate();
         List<Visit> currentListOfVisits = listVisits.get(dateOfVisit);
@@ -152,6 +147,5 @@ public class VisitServiceImpl implements VisitService {
     @Override
     public void setListVisits(Map<LocalDate, List<Visit>> listVisits) {
         this.listVisits = listVisits;
-        //Visit.countVisits = listVisits.size() + 1;
     }
 }

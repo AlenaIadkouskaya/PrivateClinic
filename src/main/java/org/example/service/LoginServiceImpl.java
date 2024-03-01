@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.model.Patient;
 import org.example.model.User;
 import java.lang.module.FindException;
 import java.util.ArrayList;
@@ -18,9 +19,9 @@ public class LoginServiceImpl implements LoginService {
         throw new FindException("Not found User");
     }
 
-//    public void addUser(Patient patient){
-//        users.add(patient);
-//    }
+    public void addPatient(User patient){
+        users.add(patient);
+    }
 
     @Override
     public List<User> getUsers() {

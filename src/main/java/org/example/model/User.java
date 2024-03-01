@@ -1,13 +1,15 @@
 package org.example.model;
 
+import java.util.UUID;
+
 public abstract class User {
-    private final Integer id;
+    private final UUID id;
     private final String name;
     private final String surname;
     private final String login;
     private final String password;
 
-    public User(Integer id, String name, String surname, String login, String password) {
+    public User(UUID id, String name, String surname, String login, String password) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -19,7 +21,7 @@ public abstract class User {
         return login;
     }
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
