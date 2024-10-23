@@ -1,1 +1,1 @@
-# PrivateCli
+Aplikacja konsolowa z menu pozwalającym na uruchomienie jako lekarz (zabezpieczone hasłem) lub jako pacjent z możliwośćią dodawania, usuwania, anulowania i wyświetlania wizyt/terminów przez lekarza oraz możliwośćią przeglądania dostępnych wizyt, umawiania się na wizyty i wyszukiwania terminów przez pacjentów.
